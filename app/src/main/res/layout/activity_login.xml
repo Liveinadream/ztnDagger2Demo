@@ -33,4 +33,17 @@
             android:inputType="numberPassword"/>
 
 
+    <Button
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="登录"
+            android:textSize="@dimen/sp_20"
+            android:background="@android:color/holo_blue_bright"
+            android:layout_margin="@dimen/margin_15"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
 </android.support.constraint.ConstraintLayout>

@@ -8,6 +8,7 @@ import com.ztn.app.presenter.LoginPresenter
 import com.ztn.app.R
 import com.ztn.common.customs.CustomProgressDialog
 import com.ztn.common.utils.wayutils.DialogUtils
+import kotlinx.android.synthetic.main.activity_login.*
 
 /**
  * Created by 冒险者ztn on 2019/2/12.
@@ -51,6 +52,9 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
     override fun onViewCreated() {
         super.onViewCreated()
         mPresenter.attachView(this)
+        login.setOnClickListener {
+            mPresenter.login()
+        }
     }
 }
 
