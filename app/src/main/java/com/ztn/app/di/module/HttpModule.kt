@@ -3,6 +3,7 @@ package com.ztn.app.di.module
 import com.ztn.app.BuildConfig
 import com.ztn.app.Constants
 import com.ztn.app.di.qualifier.ZhihuUrl
+import com.ztn.app.di.scope.ActivityScope
 import com.ztn.app.model.http.api.ZhihuApis
 import com.ztn.app.util.SystemUtil
 import dagger.Module
@@ -13,7 +14,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -24,28 +24,28 @@ import javax.inject.Singleton
 @Module
 open class HttpModule {
 
-    @Singleton
     @Provides
+    @ActivityScope
     internal fun provideRetrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder()
     }
 
 
-    @Singleton
     @Provides
+    @ActivityScope
     internal fun provideOkHttpBuilder(): OkHttpClient.Builder {
         return OkHttpClient.Builder()
     }
 
-    @Singleton
     @Provides
     @ZhihuUrl
+    @ActivityScope
     internal fun provideZhihuRetrofit(builder: Retrofit.Builder, client: OkHttpClient): Retrofit {
         return createRetrofit(builder, client, ZhihuApis.HOST)
     }
 
-    @Singleton
     @Provides
+    @ActivityScope
     internal fun provideClient(builder: OkHttpClient.Builder): OkHttpClient {
         if (BuildConfig.DEBUG) {
             val loggingInterceptor = HttpLoggingInterceptor()
@@ -104,8 +104,8 @@ open class HttpModule {
         return builder.build()
     }
 
-    @Singleton
     @Provides
+    @ActivityScope
     open fun provideZhihuService(@ZhihuUrl retrofit: Retrofit): ZhihuApis = retrofit.create(ZhihuApis::class.java)
 
 

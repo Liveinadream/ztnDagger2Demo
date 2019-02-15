@@ -7,6 +7,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
+
 class RxThread @Inject constructor(@Named(RxThreadModule.mainThread) private val mainSchedulers: Scheduler,
                                    @Named(RxThreadModule.ioThread) private val ioScheduler: Scheduler) {
 

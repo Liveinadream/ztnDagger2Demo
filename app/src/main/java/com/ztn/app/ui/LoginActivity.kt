@@ -22,7 +22,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
     }
 
     override fun getLayout(): Int {
-        return R.layout.activity_main
+        return R.layout.activity_login
     }
 
     private var customProgressDialog: CustomProgressDialog? = null

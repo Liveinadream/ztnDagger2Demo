@@ -1,5 +1,6 @@
 package com.ztn.app.di.module
 
+import com.ztn.app.di.scope.ActivityScope
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -16,13 +17,13 @@ open class RxThreadModule {
         const val ioThread = "ioThread"
     }
 
-    @Singleton
     @Provides
+    @ActivityScope
     @Named(mainThread)
     open fun provideAndroidSchedulers(): Scheduler = AndroidSchedulers.mainThread()
 
     @Provides
-    @Singleton
+    @ActivityScope
     @Named(ioThread)
     open fun provideSchedulersIO(): Scheduler = Schedulers.io()
 }
