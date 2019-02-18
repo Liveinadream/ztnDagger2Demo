@@ -61,6 +61,4 @@ dependencies {
     //other
     api rootProject.ext.dependencies["recyclerview-adapter"]
 
-
-
 }

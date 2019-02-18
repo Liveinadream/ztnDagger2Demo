@@ -82,8 +82,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
 
             }
-            R.id.nav_slideshow -> {
-
+            R.id.view_installed_apk -> {
+                InstalledActivity.startWithNothing(this)
             }
             R.id.nav_manage -> {
 
@@ -100,10 +100,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun checkPackInfo(packname: String): Boolean {
+    private fun checkPackInfo(packageName: String): Boolean {
         var packageInfo: PackageInfo? = null
         try {
-            packageInfo = packageManager.getPackageInfo(packname, 0)
+            packageInfo = packageManager.getPackageInfo(packageName, 0)
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }

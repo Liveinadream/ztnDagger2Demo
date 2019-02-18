@@ -13,7 +13,7 @@
                 android:icon="@drawable/ic_menu_gallery"
                 android:title="@string/another"/>
         <item
-                android:id="@+id/nav_slideshow"
+                android:id="@+id/view_installed_apk"
                 android:icon="@drawable/ic_menu_slideshow"
                 android:title="@string/install_apk"/>
         <item

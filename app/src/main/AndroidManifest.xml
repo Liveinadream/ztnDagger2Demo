@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!--<uses-permission android:name="android.permission.INSTALL_PACKAGES"/>-->
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -24,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.LoginActivity"/>
+        <activity android:name=".ui.InstalledActivity"/>
     </application>
 
 </manifest>
