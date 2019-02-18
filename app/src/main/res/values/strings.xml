@@ -8,4 +8,14 @@
     <string name="action_settings">Settings</string>
     <string name="jump_next">跳转下一个界面</string>
     <string name="another">打开另外一个应用</string>
+
+
+    <!--login 界面-->
+    <string name="name">姓名</string>
+    <string name="password">密码</string>
+    <string name="install_apk">去看看手机中安装的程序</string>
+    <string name="ztn_file_manager">浏览一下手机中的文件</string>
+    <string name="headImg">头像</string>
+    <string name="short_default_string">default</string>
+    <string name="default_string">default_string</string>
 </resources>

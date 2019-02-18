@@ -12,7 +12,9 @@ import javax.inject.Inject
  * Created by 冒险者ztn on 2019/2/12.
  * 介绍 todo
  */
-open class LoginPresenter @Inject constructor() :
+//private val iVew: ICommonView
+open class LoginPresenter @Inject
+constructor(private val api: ZhihuApis, private val rxThread: RxThread) :
     BasePresenter<LoginContract.View>(),
     LoginContract.Present {
 
@@ -28,13 +30,13 @@ open class LoginPresenter @Inject constructor() :
 
         view.loading()
 
-//        subscriptions.add(api.getWelcomeInfo("dadsa")
-//            .compose(rxThread.applyAsync())
-//            .doOnTerminate { view.dismissLoading() }
-//            .subscribe({
-//                view.loginSuccess()
-//            }, {})
-//        )
+        subscriptions.add(api.getWelcomeInfo("dadsa")
+            .compose(rxThread.applyAsync())
+            .doOnTerminate { view.dismissLoading() }
+            .subscribe({
+                view.loginSuccess()
+            }, {})
+        )
 
 
     }

@@ -32,7 +32,7 @@ class BaseApplication : Application() {
         CrashHandler.instance.init(this)
         appComponent = DaggerAppComponent.builder()
             .applicationModule(ApplicationModule(app))
-            .httpModule(HttpModule())
+//            .httpModule(HttpModule())
             .build()
     }
 
