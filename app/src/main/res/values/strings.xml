@@ -13,4 +13,6 @@
     <!--login 界面-->
     <string name="name">姓名</string>
     <string name="password">密码</string>
+    <string name="install_apk">去看看手机中安装的程序</string>
+    <string name="ztn_file_manager">浏览一下手机中的文件</string>
 </resources>
