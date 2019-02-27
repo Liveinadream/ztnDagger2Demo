@@ -9,6 +9,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Named
 import javax.inject.Singleton
 
+
 @Module
 open class RxThreadModule {
 

@@ -18,4 +18,5 @@
     <string name="headImg">头像</string>
     <string name="short_default_string">default</string>
     <string name="default_string">default_string</string>
+    <string name="logo_setting">这是一张图片</string>
 </resources>
