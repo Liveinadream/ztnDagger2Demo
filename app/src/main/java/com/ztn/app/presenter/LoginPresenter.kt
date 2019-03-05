@@ -18,23 +18,15 @@ constructor(private val api: ZhihuApis, private val rxThread: RxThread) :
     BasePresenter<LoginContract.View>(),
     LoginContract.Present {
 
-    private val subscriptions = CompositeDisposable()
-    private lateinit var view: LoginContract.View
-
-    override fun attachView(mRootView: LoginContract.View) {
-        super.attachView(mRootView)
-        view = mRootView
-    }
-
     override fun login() {
 
-        view.loading()
+        mRootView?.get()?.loading()
 
-        subscriptions.add(api.getWelcomeInfo("dadsa")
+        compositeDisposable.add(api.getWelcomeInfo("dadsa")
             .compose(rxThread.applyAsync())
-            .doOnTerminate { view.dismissLoading() }
+            .doOnTerminate { mRootView?.get()?.dismissLoading() }
             .subscribe({
-                view.loginSuccess()
+                mRootView?.get()?.loginSuccess()
             }, {})
         )
 

@@ -1,5 +1,6 @@
 package com.ztn.app.ui
 
+import android.Manifest
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -12,9 +13,11 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import com.ztn.app.R
+import com.ztn.app.ui.file.FileActivity
 import com.ztn.common.ToastHelper
 import com.ztn.common.utils.animation.viewClick
 
@@ -37,6 +40,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE).subscribe({
+            if (!it) {
+                ToastHelper.showToast("您未授予读取文件权限")
+                finish()
+            }
+
+        }, {}).dispose()
     }
 
     override fun onBackPressed() {
@@ -86,11 +97,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
 
             }
+
             R.id.view_installed_apk -> {
                 InstalledActivity.startWithNothing(this)
             }
-            R.id.nav_manage -> {
 
+            R.id.show_file_in_phone -> {
+                FileActivity.startWithNothing(this)
             }
             R.id.nav_share -> {
 

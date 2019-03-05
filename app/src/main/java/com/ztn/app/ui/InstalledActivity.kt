@@ -65,6 +65,17 @@ class InstalledActivity : SimpleActivity() {
     override fun onEnterAnimationComplete() {
         super.onEnterAnimationComplete()
         installedApkList.adapter = adapter
+        method {
+            add(it, 2)
+        }
+    }
+
+    private fun method(t: (Int) -> Int) {
+        t.invoke(1)
+    }
+
+    private fun add(a: Int, b: Int): Int {
+        return a + b
     }
 
 }

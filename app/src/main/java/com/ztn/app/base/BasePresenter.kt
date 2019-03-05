@@ -14,7 +14,7 @@ open class BasePresenter<T : BaseView> : IPresenter<T> {
     var mRootView: Reference<T>? = null
         private set
 
-    private var compositeDisposable = CompositeDisposable()
+    var compositeDisposable = CompositeDisposable()
 
 
     override fun  attachView(mRootView: T) {

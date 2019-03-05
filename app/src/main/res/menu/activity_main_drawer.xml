@@ -17,7 +17,7 @@
                 android:icon="@drawable/ic_menu_slideshow"
                 android:title="@string/install_apk"/>
         <item
-                android:id="@+id/nav_manage"
+                android:id="@+id/show_file_in_phone"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="@string/ztn_file_manager"/>
     </group>
