@@ -4,9 +4,9 @@ import android.util.Log
 import com.ztn.app.base.BasePresenter
 import com.ztn.app.base.contract.FileContract
 import com.ztn.app.model.bean.FileBean
+import com.ztn.app.rx.CommonOnSubscribe
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
-import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.io.File
@@ -16,7 +16,7 @@ import javax.inject.Inject
  * Created by 冒险者ztn on 2019/3/5.
  * 介绍 todo
  */
-class FilePresent @Inject constructor() : BasePresenter<FileContract.View>(), FileContract.Present {
+class FilePresenter @Inject constructor() : BasePresenter<FileContract.View>(), FileContract.Present {
 
     override fun backup(file: File) {
         clickItem(file.parent)
@@ -89,15 +89,4 @@ class FilePresent @Inject constructor() : BasePresenter<FileContract.View>(), Fi
 
 }
 
-abstract class CommonOnSubscribe<T> : ObservableOnSubscribe<T> {
-
-    abstract fun work(e: ObservableEmitter<T>)
-
-    @Throws(Exception::class)
-    override fun subscribe(e: ObservableEmitter<T>) {
-        if (!e.isDisposed) {
-            work(e)
-        }
-    }
-}
 
