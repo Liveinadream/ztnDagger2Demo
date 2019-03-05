@@ -1,6 +1,5 @@
 package com.ztn.app.di.component
 
-import android.app.Activity
 import com.ztn.app.di.module.ActivityModule
 import com.ztn.app.di.module.HttpModule
 import com.ztn.app.di.module.RxThreadModule
@@ -8,6 +7,7 @@ import com.ztn.app.di.scope.ActivityScope
 import com.ztn.app.model.http.api.ZhihuApis
 import com.ztn.app.rx.RxThread
 import com.ztn.app.ui.LoginActivity
+import com.ztn.app.ui.file.FileActivity
 import dagger.Component
 
 /**
@@ -24,9 +24,10 @@ import dagger.Component
     modules = [ActivityModule::class, HttpModule::class, RxThreadModule::class]
 )
 interface ActivityComponent {
-    fun getActivity(): Activity
 
     fun inject(loginActivity: LoginActivity)
+
+    fun inject(fileActivity: FileActivity)
 
     fun inject(apis: ZhihuApis)
 

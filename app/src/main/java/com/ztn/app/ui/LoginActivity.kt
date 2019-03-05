@@ -7,12 +7,13 @@ import com.ztn.app.base.contract.LoginContract
 import com.ztn.app.presenter.LoginPresenter
 import com.ztn.app.R
 import com.ztn.common.customs.CustomProgressDialog
+import com.ztn.common.utils.show
 import com.ztn.common.utils.wayutils.DialogUtils
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
  * Created by 冒险者ztn on 2019/2/12.
- * 介绍 todo
+ * 登录界面
  */
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
 
@@ -55,6 +56,10 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
         login.setOnClickListener {
             mPresenter.login()
         }
+//      val let = customProgressDialog?.let {
+//          show("dasda")
+//          "dasda"
+//      }
     }
 }
 

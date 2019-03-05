@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_installed_apk.*
 
 /**
  * Created by 冒险者ztn on 2019/2/18.
- * 介绍 todo
+ * 已安装的 apk 界面
  */
 class InstalledActivity : SimpleActivity() {
 
@@ -57,12 +57,25 @@ class InstalledActivity : SimpleActivity() {
                     }
                 }
             }
+        installedApkList.hasFixedSize()
+        installedApkList.setItemViewCacheSize(20)
         installedApkList.layoutManager = LinearLayoutManager(this)
     }
 
     override fun onEnterAnimationComplete() {
         super.onEnterAnimationComplete()
         installedApkList.adapter = adapter
+        method {
+            add(it, 2)
+        }
+    }
+
+    private fun method(t: (Int) -> Int) {
+        t.invoke(1)
+    }
+
+    private fun add(a: Int, b: Int): Int {
+        return a + b
     }
 
 }

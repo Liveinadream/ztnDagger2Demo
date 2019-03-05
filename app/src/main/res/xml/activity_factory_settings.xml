@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <header
+            android:fragment="com.ztn.app.fragment.setting.LogoSettings"
+            android:title="@string/logo_setting">
+        <!--android:summary="@string/radio_zone_summary" -->
+    </header>
+
+    <!--<header android:fragment="com.example.TVSettings"-->
+    <!--android:title="@string/tv"-->
+    <!--&gt;-->
+    <!--&lt;!&ndash; android:summary="@string/tv_summary" &ndash;&gt;-->
+    <!--</header>-->
+
+    <!--<header android:fragment="com.example.LogoSettings"-->
+    <!--android:title="@string/logo"-->
+    <!--&gt;-->
+    <!--&lt;!&ndash; android:summary="@string/logo_summary"  &ndash;&gt;-->
+    <!--</header>-->
+
+    <!--<header android:fragment="com.example.CarTypeSettings"-->
+    <!--android:title="@string/cartype"-->
+    <!--&gt;-->
+    <!--&lt;!&ndash; android:summary="@string/cartype_summary" &ndash;&gt;-->
+    <!--</header>-->
+
+    <!--<header android:fragment="com.example.ApplicationSettings"-->
+    <!--android:title="@string/application"-->
+    <!--&gt;-->
+    <!--&lt;!&ndash; android:summary="@string/application_summary" &ndash;&gt;-->
+    <!--</header>-->
+
+    <!--<header android:fragment="com.example.DevelopmentSettings"-->
+    <!--android:title="@string/development"-->
+    <!--&gt;-->
+    <!--&lt;!&ndash; android:summary="@string/development_summary" &ndash;&gt;-->
+    <!--</header>-->
+
+</preference-headers>

@@ -9,7 +9,7 @@ import dagger.Provides
 
 /**
  * Created by 冒险者ztn on 2019/2/12.
- * 介绍 todo
+ * 这里提供了 fragment 需要注入的对象
  */
 @Module
 class FragmentModule(private val fragment: Fragment) {

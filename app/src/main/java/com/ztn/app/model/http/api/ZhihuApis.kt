@@ -20,7 +20,7 @@ interface ZhihuApis {
 
     companion object {
 
-        val HOST = "http://news-at.zhihu.com/api/4/"
+        const val HOST = "http://news-at.zhihu.com/api/4/"
     }
 
 }

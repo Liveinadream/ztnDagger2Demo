@@ -19,7 +19,6 @@ import javax.inject.Singleton
 
 /**
  * Created by 冒险者ztn on 2019/2/12.
- * 介绍 todo
  */
 @Module
 open class HttpModule {
