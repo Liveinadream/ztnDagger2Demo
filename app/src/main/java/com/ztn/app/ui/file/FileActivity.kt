@@ -111,7 +111,7 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
         super.onViewCreated()
         mPresenter.attachView(this)
         usePath = Environment.getExternalStorageDirectory().path
-        mPresenter.clickItem(Environment.getExternalStorageDirectory().path)
+        mPresenter.clickItem(usePath)
         path.setOnClickListener {
             if (usePath == Environment.getExternalStorageDirectory().path) {
                 val toast = Toast.makeText(this, null, Toast.LENGTH_SHORT)
