@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths>
+        <external-path
+            name="camera_photos"
+            path="" />
+    </paths>
+    <paths>
+        <external-path
+            name="external_files"
+            path="." />
+    </paths>
+
+    <paths>
+        <external-path
+            name="download"
+            path="versionUpdate" />
+    </paths>
+    <paths>
+        <external-path
+            name="downicon"
+            path="explainicon" />
+        <external-path
+            name="files_root"
+            path="Android/data/com/pgyersdk" />
+        <external-path
+            name="external_storage_root"
+            path="." />
+    </paths>
+
+    <paths>
+        <external-files-path
+            name="camera_images"
+            path="" />
+    </paths>
+
+</resources>

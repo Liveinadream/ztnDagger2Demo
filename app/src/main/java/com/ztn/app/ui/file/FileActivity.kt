@@ -61,7 +61,9 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
                             if (item.isFileDir) {
                                 mPresenter.clickItem(item.path)
                             } else {
-                                ToastHelper.showToast("暂不支持打开文件")
+                                mPresenter.openFile(File(item.path))
+
+//                                ToastHelper.showToast("暂不支持打开文件")
                             }
                         }
 
@@ -91,6 +93,10 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
     override fun showPath(usePath: String) {
         path.text = usePath
         this.usePath = usePath
+    }
+
+    override fun openInActivity(intent: Intent) {
+        startActivity(intent)
     }
 
     override fun initInject() {

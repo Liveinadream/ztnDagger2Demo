@@ -1,15 +1,21 @@
 package com.ztn.app.presenter
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.support.v4.content.FileProvider
 import android.util.Log
 import com.ztn.app.base.BasePresenter
 import com.ztn.app.base.contract.FileContract
 import com.ztn.app.model.bean.FileBean
 import com.ztn.app.rx.CommonOnSubscribe
+import com.ztn.common.framework.AppManager
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.io.File
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -17,6 +23,22 @@ import javax.inject.Inject
  * 介绍 todo
  */
 class FilePresenter @Inject constructor() : BasePresenter<FileContract.View>(), FileContract.Present {
+
+
+    override fun openFile(file: File) {
+        //判断系统是否是7.0
+        val localUrl = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            Uri.fromFile(file)
+        } else {
+            FileProvider.getUriForFile(AppManager.context, "${AppManager.context.packageName}.FileProvider", file)
+        }
+        val mime = AppManager.context.contentResolver.getType(localUrl)
+
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(localUrl, mime)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        mRootView?.get()?.openInActivity(intent)
+    }
 
     override fun backup(file: File) {
         clickItem(file.parent)
@@ -40,7 +62,7 @@ class FilePresenter @Inject constructor() : BasePresenter<FileContract.View>(), 
 
                     fileDir.listFiles().forEach {
                         if (it.isDirectory) {
-                            dirs.add(FileBean(it.name, true, it.path, show = "${it.listFiles().size}个"))
+                            dirs.add(FileBean(it.name, true, it.path, show = "${it.listFiles().size} 项"))
                         } else {
                             val size = it.length()
 
@@ -49,7 +71,10 @@ class FilePresenter @Inject constructor() : BasePresenter<FileContract.View>(), 
 
                                 size < 1024 * 1024 -> "${String.format("%.2f", (size / 1024).toFloat())}KB"
 
-                                size < 1024 * 1024 * 1024 -> "${String.format("%.2f", (size / 1024 * 1024).toFloat())}MB"
+                                size < 1024 * 1024 * 1024 -> "${String.format(
+                                    "%.2f",
+                                    (size / 1024 * 1024).toFloat()
+                                )}MB"
 
                                 else -> "${String.format("%.2f", (size / (1024 * 1024 * 1024)).toFloat())}GB"
                             }

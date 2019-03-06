@@ -1,5 +1,6 @@
 package com.ztn.app.base.contract
 
+import android.content.Intent
 import com.ztn.app.base.BaseView
 import com.ztn.app.base.IPresenter
 import com.ztn.app.model.bean.FileBean
@@ -15,6 +16,8 @@ interface FileContract {
         fun showList(list: MutableList<FileBean>)
 
         fun showPath(usePath: String)
+
+        fun openInActivity(intent: Intent)
     }
 
     interface Present : IPresenter<View> {
@@ -22,6 +25,8 @@ interface FileContract {
         fun clickItem(path: String)
 
         fun backup(file: File)
+
+        fun openFile(file: File)
 
     }
 }
