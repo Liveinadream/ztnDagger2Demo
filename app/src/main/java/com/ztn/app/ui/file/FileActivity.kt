@@ -12,7 +12,7 @@ import com.ztn.app.R
 import com.ztn.app.base.BaseActivity
 import com.ztn.app.base.contract.FileContract
 import com.ztn.app.model.bean.FileBean
-import com.ztn.app.presenter.FilePresent
+import com.ztn.app.presenter.FilePresenter
 import com.ztn.common.ToastHelper
 import kotlinx.android.synthetic.main.activity_files.*
 import java.io.File
@@ -22,7 +22,7 @@ import java.io.File
  * Created by 冒险者ztn on 2019/3/4.
  * 文件列表界面
  */
-class FileActivity : BaseActivity<FilePresent>(), FileContract.View {
+class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
 
 
     companion object {
@@ -61,7 +61,9 @@ class FileActivity : BaseActivity<FilePresent>(), FileContract.View {
                             if (item.isFileDir) {
                                 mPresenter.clickItem(item.path)
                             } else {
-                                ToastHelper.showToast("暂不支持打开文件")
+                                mPresenter.openFile(File(item.path))
+
+//                                ToastHelper.showToast("暂不支持打开文件")
                             }
                         }
 
@@ -93,6 +95,10 @@ class FileActivity : BaseActivity<FilePresent>(), FileContract.View {
         this.usePath = usePath
     }
 
+    override fun openInActivity(intent: Intent) {
+        startActivity(intent)
+    }
+
     override fun initInject() {
         getActivityComponent().inject(this)
     }
@@ -105,7 +111,7 @@ class FileActivity : BaseActivity<FilePresent>(), FileContract.View {
         super.onViewCreated()
         mPresenter.attachView(this)
         usePath = Environment.getExternalStorageDirectory().path
-        mPresenter.clickItem(Environment.getExternalStorageDirectory().path)
+        mPresenter.clickItem(usePath)
         path.setOnClickListener {
             if (usePath == Environment.getExternalStorageDirectory().path) {
                 val toast = Toast.makeText(this, null, Toast.LENGTH_SHORT)

@@ -41,7 +41,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE).subscribe({
+        RxPermissions(this).request(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ).subscribe({
             if (!it) {
                 ToastHelper.showToast("您未授予读取文件权限")
                 finish()
