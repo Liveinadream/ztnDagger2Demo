@@ -20,6 +20,7 @@ ext {
             retrofit: "2.3.0",
             okhttp  : "3.13.1",
             dagger2 : "2.14.1",
+            jsr250  : "1.0",
     ]
 
     dependencies = [
@@ -34,7 +35,7 @@ ext {
             "cardview-v7"               : "com.android.support:cardview-v7:${dependVersion.support}",
             "recyclerview-v7"           : "com.android.support:recyclerview-v7:${dependVersion.support}",
             "design"                    : "com.android.support:design:${dependVersion.support}",
-            "ranger"                    : "com.github.Liveinadream:Ranger:1.0.4",
+            "ranger"                    : "com.github.Liveinadream:Ranger:1.0.5",
 
             //rx
             "rxjava"                    : "io.reactivex.rxjava2:rxjava:2.2.6",
@@ -52,7 +53,10 @@ ext {
             //di
             "dagger"                    : "com.google.dagger:dagger:${dependVersion.dagger2}",
             "dagger-compiler"           : "com.google.dagger:dagger-compiler:${dependVersion.dagger2}",
+            "dagger-android-processor"  : "com.google.dagger:dagger-android-processor:${dependVersion.dagger2}",
+            "annotation-dagger-compiler": "com.google.dagger:dagger-compiler:${dependVersion.dagger2}",
             "annotation"                : "org.glassfish:javax.annotation:10.0-b28",
+            "jsr250-api"                : "javax.annotation:jsr250-api:${dependVersion.jsr250}",
 
             //other
             "multidex"                  : "com.android.support:multidex:1.0.3",

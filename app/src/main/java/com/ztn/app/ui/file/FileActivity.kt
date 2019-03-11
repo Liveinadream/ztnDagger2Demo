@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Environment
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
+import android.widget.CompoundButton
 import android.widget.Toast
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -14,6 +16,8 @@ import com.ztn.app.base.contract.FileContract
 import com.ztn.app.model.bean.FileBean
 import com.ztn.app.presenter.FilePresenter
 import com.ztn.common.ToastHelper
+import com.ztn.common.utils.gone
+import com.ztn.common.utils.visible
 import kotlinx.android.synthetic.main.activity_files.*
 import java.io.File
 
@@ -33,6 +37,7 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
 
     private var adapter: BaseQuickAdapter<FileBean, BaseViewHolder>? = null
     private lateinit var usePath: String
+    private var selectNum = 0
 
 
     override fun getLayout(): Int {
@@ -47,7 +52,7 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
 
 
     override fun showList(list: MutableList<FileBean>) {
-
+        selectNum = 0
 
         if (adapter == null) {
             adapter = object : BaseQuickAdapter<FileBean, BaseViewHolder>(R.layout.item_flle, list) {
@@ -57,20 +62,43 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
                         setText(R.id.name, item.name)
                         setText(R.id.content, item.show)
 
+                        //建立监听
                         (getView(R.id.parent) as ConstraintLayout).setOnClickListener {
                             if (item.isFileDir) {
                                 mPresenter.clickItem(item.path)
                             } else {
                                 mPresenter.openFile(File(item.path))
-
-//                                ToastHelper.showToast("暂不支持打开文件")
                             }
                         }
 
+                        setOnCheckedChangeListener(R.id.selected) { _, isChecked ->
+                            item.selected = isChecked
+
+                            if (isChecked) {
+                                selectNum++
+                                seeTheSelected.visible()
+                            } else {
+                                selectNum--
+                            }
+
+                            if (selectNum == 0) {
+                                seeTheSelected.gone()
+                            }
+                        }
+
+
+                        //判断类型
                         if (item.isFileDir) {
                             setImageResource(R.id.headImg, R.drawable.dir)
                         } else {
                             setImageResource(R.id.headImg, R.drawable.file)
+                        }
+
+
+                        if (item.selected) {
+                            setChecked(R.id.selected, true)
+                        } else {
+                            setChecked(R.id.selected, false)
                         }
                     }
 
@@ -114,12 +142,22 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
         mPresenter.clickItem(usePath)
         path.setOnClickListener {
             if (usePath == Environment.getExternalStorageDirectory().path) {
-                val toast = Toast.makeText(this, null, Toast.LENGTH_SHORT)
-                toast.setText("已经是最上级了")
-                toast.show()
+                ToastHelper.showToast("已经是最上级了")
             } else {
                 mPresenter.backup(File(usePath))
             }
+        }
+
+        seeTheSelected.setOnClickListener {
+            adapter?.apply {
+                ToastHelper.showToast(data.filter {
+                    it.selected
+                }.map {
+                    return@map it.name
+                }.toString())
+            }
+
+
         }
 
     }
