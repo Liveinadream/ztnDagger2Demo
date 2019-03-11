@@ -67,16 +67,16 @@ class FilePresenter @Inject constructor() : BasePresenter<FileContract.View>(), 
                             val size = it.length()
 
                             val show: String = when {
-                                size < 1024 -> "${String.format("%.2f", size.toFloat())}bytes"
+                                size < 1024 -> "${String.format("%.2f", size.toFloat())} bytes"
 
-                                size < 1024 * 1024 -> "${String.format("%.2f", (size / 1024).toFloat())}KB"
+                                size < 1024 * 1024 -> "${String.format("%.2f", (size / 1024f))} KB"
 
                                 size < 1024 * 1024 * 1024 -> "${String.format(
                                     "%.2f",
-                                    (size / 1024 * 1024).toFloat()
-                                )}MB"
+                                    (size / (1024f * 1024f))
+                                )} MB"
 
-                                else -> "${String.format("%.2f", (size / (1024 * 1024 * 1024)).toFloat())}GB"
+                                else -> "${String.format("%.2f", (size / (1024f * 1024f * 1024f)))} GB"
                             }
 
                             files.add(FileBean(it.name, path = it.path, show = show))
