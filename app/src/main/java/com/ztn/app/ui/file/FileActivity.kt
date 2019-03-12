@@ -5,9 +5,8 @@ import android.content.Intent
 import android.os.Environment
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
-import android.widget.CompoundButton
-import android.widget.Toast
+import android.view.View
+import android.widget.LinearLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.ztn.app.R
@@ -57,7 +56,6 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
         if (adapter == null) {
             adapter = object : BaseQuickAdapter<FileBean, BaseViewHolder>(R.layout.item_flle, list) {
                 override fun convert(helper: BaseViewHolder, item: FileBean) {
-
                     helper.apply {
                         setText(R.id.name, item.name)
                         setText(R.id.content, item.show)
@@ -86,7 +84,6 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
                             }
                         }
 
-
                         //判断类型
                         if (item.isFileDir) {
                             setImageResource(R.id.headImg, R.drawable.dir)
@@ -94,7 +91,7 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
                             setImageResource(R.id.headImg, R.drawable.file)
                         }
 
-
+                        //判断是否选中
                         if (item.selected) {
                             setChecked(R.id.selected, true)
                         } else {
@@ -109,7 +106,7 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
 
             fileList.hasFixedSize()
             fileList.setItemViewCacheSize(20)
-//            adapter?.emptyView = View.inflate(this, R.layout.no_data, fileList,false)
+            adapter?.emptyView = View.inflate(this, R.layout.no_data, LinearLayout(this))
             fileList.layoutManager = LinearLayoutManager(this)
             fileList.adapter = adapter
 
