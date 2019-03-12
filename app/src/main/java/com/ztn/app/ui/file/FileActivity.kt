@@ -1,5 +1,6 @@
 package com.ztn.app.ui.file
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Environment
@@ -121,7 +122,11 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
     }
 
     override fun openInActivity(intent: Intent) {
-        startActivity(intent)
+        try {
+            startActivity(intent)
+        }catch (e:ActivityNotFoundException){
+            ToastHelper.showToast("没有能打开的界面")
+        }
     }
 
     override fun initInject() {
