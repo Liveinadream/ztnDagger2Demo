@@ -6,7 +6,7 @@ import android.os.Build
 import android.support.v4.content.FileProvider
 import android.util.Log
 import com.ztn.app.base.BasePresenter
-import com.ztn.app.base.contract.FileContract
+import com.ztn.app.base.contract.FragmentFileContract
 import com.ztn.app.model.bean.FileBean
 import com.ztn.app.rx.CommonOnSubscribe
 import com.ztn.common.framework.AppManager
@@ -22,7 +22,8 @@ import javax.inject.Inject
  * Created by 冒险者ztn on 2019/3/5.
  * 介绍 todo
  */
-class FilePresenter @Inject constructor() : BasePresenter<FileContract.View>(), FileContract.Present {
+class FragmentFilePresenter @Inject constructor() : BasePresenter<FragmentFileContract.View>(),
+    FragmentFileContract.Present {
 
 
     override fun openFile(file: File) {

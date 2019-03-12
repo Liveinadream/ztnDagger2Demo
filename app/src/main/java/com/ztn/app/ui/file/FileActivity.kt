@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Environment
 import android.support.constraint.ConstraintLayout
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.LinearLayout
@@ -12,9 +15,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.ztn.app.R
 import com.ztn.app.base.BaseActivity
-import com.ztn.app.base.contract.FileContract
+import com.ztn.app.base.contract.ActivityFileContract
+import com.ztn.app.fragment.FileFragment
 import com.ztn.app.model.bean.FileBean
-import com.ztn.app.presenter.FilePresenter
+import com.ztn.app.presenter.ActivityFilePresenter
 import com.ztn.common.ToastHelper
 import com.ztn.common.utils.gone
 import com.ztn.common.utils.visible
@@ -26,7 +30,7 @@ import java.io.File
  * Created by 冒险者ztn on 2019/3/4.
  * 文件列表界面
  */
-class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
+class FileActivity : BaseActivity<ActivityFilePresenter>(), ActivityFileContract.View {
 
 
     companion object {
@@ -36,8 +40,17 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
     }
 
     private var adapter: BaseQuickAdapter<FileBean, BaseViewHolder>? = null
+
+    //当前的路径
     private lateinit var usePath: String
+
+    //点击的路径以及在那个位置
+    private lateinit var clickPath: ArrayList<Pair<String, Int>>
+
+    //选中的文件数量
     private var selectNum = 0
+
+    private lateinit var fileFragmentList: ArrayList<Fragment>
 
 
     override fun getLayout(): Int {
@@ -65,6 +78,7 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
                         (getView(R.id.parent) as ConstraintLayout).setOnClickListener {
                             if (item.isFileDir) {
                                 mPresenter.clickItem(item.path)
+                                clickPath.add(Pair(item.path, layoutPosition))
                             } else {
                                 mPresenter.openFile(File(item.path))
                             }
@@ -114,6 +128,10 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
         } else {
             adapter?.setNewData(list)
         }
+
+        if (clickPath.size == 0) {
+//            adapter.
+        }
     }
 
     override fun showPath(usePath: String) {
@@ -124,7 +142,7 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
     override fun openInActivity(intent: Intent) {
         try {
             startActivity(intent)
-        }catch (e:ActivityNotFoundException){
+        } catch (e: ActivityNotFoundException) {
             ToastHelper.showToast("没有能打开的界面")
         }
     }
@@ -135,20 +153,21 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
 
 
     override fun initEventAndData() {
+        clickPath = ArrayList()
     }
 
     override fun onViewCreated() {
         super.onViewCreated()
         mPresenter.attachView(this)
         usePath = Environment.getExternalStorageDirectory().path
-        mPresenter.clickItem(usePath)
-        path.setOnClickListener {
-            if (usePath == Environment.getExternalStorageDirectory().path) {
-                ToastHelper.showToast("已经是最上级了")
-            } else {
-                mPresenter.backup(File(usePath))
-            }
-        }
+//        mPresenter.clickItem(usePath)
+//        path.setOnClickListener {
+//            if (usePath == Environment.getExternalStorageDirectory().path) {
+//                ToastHelper.showToast("已经是最上级了")
+//            } else {
+//                mPresenter.backup(File(usePath))
+//            }
+//        }
 
         seeTheSelected.setOnClickListener {
             adapter?.apply {
@@ -162,6 +181,12 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
 
         }
 
+        fileFragmentList = ArrayList()
+
+        fileFragmentList.add(FileFragment.getInstance(usePath))
+        viewPager.adapter = FileFragmentAdapter(fileFragmentList, supportFragmentManager)
+
+
     }
 
     override fun onBackPressedSupport() {
@@ -170,6 +195,19 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
         } else {
             mPresenter.backup(File(usePath))
         }
+
+    }
+
+    class FileFragmentAdapter(private val fragmentList: ArrayList<Fragment>, fragmentManager: FragmentManager) :
+        FragmentStatePagerAdapter(fragmentManager) {
+        override fun getItem(position: Int): Fragment {
+            return fragmentList[position]
+        }
+
+        override fun getCount(): Int {
+            return fragmentList.size
+        }
+
 
     }
 

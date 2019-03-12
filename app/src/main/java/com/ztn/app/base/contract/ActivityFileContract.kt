@@ -8,9 +8,8 @@ import java.io.File
 
 /**
  * Created by 冒险者ztn on 2019/3/4.
- * 介绍 todo
  */
-interface FileContract {
+interface ActivityFileContract {
 
     interface View : BaseView {
         fun showList(list: MutableList<FileBean>)
