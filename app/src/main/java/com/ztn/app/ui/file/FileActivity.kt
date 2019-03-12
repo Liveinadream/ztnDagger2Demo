@@ -160,7 +160,6 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
     }
 
     override fun onBackPressedSupport() {
-        super.onBackPressedSupport()
         if (usePath == Environment.getExternalStorageDirectory().path) {
             finish()
         } else {
@@ -168,6 +167,5 @@ class FileActivity : BaseActivity<FilePresenter>(), FileContract.View {
         }
 
     }
-
 
 }
