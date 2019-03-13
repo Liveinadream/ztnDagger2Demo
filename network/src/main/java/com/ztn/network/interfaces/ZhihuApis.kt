@@ -1,14 +1,12 @@
-package com.ztn.app.model.http.api
+package com.ztn.network.interfaces
 
-import com.ztn.app.model.bean.WelcomeBean
-import io.reactivex.Flowable
+import com.ztn.network.bean.WelcomeBean
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 /**
  * Created by 冒险者ztn on 2019/2/12.
- * 介绍 todo
  */
 interface ZhihuApis {
 

@@ -18,6 +18,10 @@ android {
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner rootProject.ext.android.testInstrumentationRunner
     }
+    packagingOptions {
+        exclude 'META-INF/common_release.kotlin_module'
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -34,8 +38,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':library')
-    implementation project(':common')
+    implementation project(':network')
 
     implementation rootProject.ext.dependencies["kotlin"]
     testImplementation rootProject.ext.dependencies["junit"]

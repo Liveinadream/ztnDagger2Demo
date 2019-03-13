@@ -1,4 +1,4 @@
-package com.ztn.app.model.bean
+package com.ztn.network.bean
 
 /**
  * Created by 冒险者ztn on 2019/3/5.

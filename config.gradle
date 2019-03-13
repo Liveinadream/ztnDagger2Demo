@@ -58,6 +58,9 @@ ext {
             "annotation"                : "org.glassfish:javax.annotation:10.0-b28",
             "jsr250-api"                : "javax.annotation:jsr250-api:${dependVersion.jsr250}",
 
+            //IM
+            "WebSocket"                 : "org.java-websocket:Java-WebSocket:1.4.0",
+
             //other
             "multidex"                  : "com.android.support:multidex:1.0.3",
             "logger"                    : "com.orhanobut:logger:2.1.1",

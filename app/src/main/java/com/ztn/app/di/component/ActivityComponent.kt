@@ -4,9 +4,10 @@ import com.ztn.app.di.module.ActivityModule
 import com.ztn.app.di.module.HttpModule
 import com.ztn.app.di.module.RxThreadModule
 import com.ztn.app.di.scope.ActivityScope
-import com.ztn.app.model.http.api.ZhihuApis
+import com.ztn.network.interfaces.ZhihuApis
 import com.ztn.app.rx.RxThread
 import com.ztn.app.ui.LoginActivity
+import com.ztn.app.ui.chat.FriendActivity
 import com.ztn.app.ui.file.FileActivity
 import dagger.Component
 
@@ -28,6 +29,8 @@ interface ActivityComponent {
     fun inject(loginActivity: LoginActivity)
 
     fun inject(fileActivity: FileActivity)
+
+    fun inject(friendActivity: FriendActivity)
 
     fun inject(apis: ZhihuApis)
 

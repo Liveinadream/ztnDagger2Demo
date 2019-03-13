@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -13,7 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.ztn.app.R
 import com.ztn.app.base.BaseFragment
-import com.ztn.app.model.bean.FileBean
+import com.ztn.network.bean.FileBean
 import com.ztn.app.ui.file.FileActivity
 import com.ztn.common.ToastHelper
 import com.ztn.common.utils.gone
