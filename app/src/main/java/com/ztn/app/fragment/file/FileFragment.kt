@@ -1,18 +1,22 @@
-package com.ztn.app.fragment
+package com.ztn.app.fragment.file
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.ztn.app.R
 import com.ztn.app.base.BaseFragment
-import com.ztn.app.base.contract.FragmentFileContract
 import com.ztn.app.model.bean.FileBean
-import com.ztn.app.presenter.FragmentFilePresenter
+import com.ztn.app.ui.file.FileActivity
+import com.ztn.common.ToastHelper
+import com.ztn.common.utils.gone
+import com.ztn.common.utils.visible
 import kotlinx.android.synthetic.main.fragment_files.*
 import java.io.File
 
@@ -34,14 +38,11 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
         }
     }
 
-
     private var adapter: BaseQuickAdapter<FileBean, BaseViewHolder>? = null
+    private lateinit var fileActivity: FileActivity
 
     //当前的路径
     private lateinit var usePath: String
-
-    //点击的路径以及在那个位置
-    private lateinit var clickPath: ArrayList<Pair<String, Int>>
 
     //选中的文件数量
     private var selectNum = 0
@@ -60,8 +61,7 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
                         //建立监听
                         (getView(R.id.parent) as ConstraintLayout).setOnClickListener {
                             if (item.isFileDir) {
-                                mPresenter.clickItem(item.path)
-                                clickPath.add(Pair(item.path, layoutPosition))
+                                fileActivity.clickItem(item.path)
                             } else {
                                 mPresenter.openFile(File(item.path))
                             }
@@ -70,16 +70,17 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
                         setOnCheckedChangeListener(R.id.selected) { _, isChecked ->
                             item.selected = isChecked
 
-//                            if (isChecked) {
-//                                selectNum++
-//                                seeTheSelected.visible()
-//                            } else {
-//                                selectNum--
-//                            }
-//
-//                            if (selectNum == 0) {
-//                                seeTheSelected.gone()
-//                            }
+
+                            if (isChecked) {
+                                selectNum++
+                                fileActivity.getViewById(R.id.seeTheSelected).visible()
+                            } else {
+                                selectNum--
+                            }
+
+                            if (selectNum == 0) {
+                                fileActivity.getViewById(R.id.seeTheSelected).gone()
+                            }
                         }
 
                         //判断类型
@@ -111,17 +112,18 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
         } else {
             adapter?.setNewData(list)
         }
-
-        if (clickPath.size == 0) {
-//            adapter.
-        }
     }
 
-
     override fun showPath(usePath: String) {
+        (fileActivity.getViewById(R.id.path) as TextView).text = usePath
     }
 
     override fun openInActivity(intent: Intent) {
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            ToastHelper.showToast("没有能打开的界面")
+        }
     }
 
     override fun loading() {
@@ -138,11 +140,16 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
         getFragmentComponent().inject(this)
     }
 
+    fun getPath(): String {
+        return usePath
+    }
+
     override fun initView() {
     }
 
     override fun lazyLoad() {
         mPresenter = FragmentFilePresenter()
+        fileActivity = activity as FileActivity
         mPresenter.attachView(this)
         usePath = arguments?.getString(PATH)!!
         mPresenter.clickItem(usePath)

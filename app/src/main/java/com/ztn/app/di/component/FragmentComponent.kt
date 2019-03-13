@@ -5,7 +5,7 @@ import com.ztn.app.di.module.HttpModule
 import com.ztn.app.di.module.RxThreadModule
 import com.ztn.app.di.scope.FragmentScope
 import com.ztn.app.rx.RxThread
-import com.ztn.app.fragment.FileFragment
+import com.ztn.app.fragment.file.FileFragment
 import dagger.Component
 
 /**

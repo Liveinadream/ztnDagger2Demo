@@ -35,6 +35,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':library')
+    implementation project(':common')
 
     implementation rootProject.ext.dependencies["kotlin"]
     testImplementation rootProject.ext.dependencies["junit"]
