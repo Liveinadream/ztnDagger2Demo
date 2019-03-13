@@ -1,4 +1,4 @@
-package com.ztn.app.base.contract
+package com.ztn.app.fragment.file
 
 import android.content.Intent
 import com.ztn.app.base.BaseView
@@ -8,9 +8,8 @@ import java.io.File
 
 /**
  * Created by 冒险者ztn on 2019/3/4.
- * 介绍 todo
  */
-interface FileContract {
+interface FragmentFileContract {
 
     interface View : BaseView {
         fun showList(list: MutableList<FileBean>)

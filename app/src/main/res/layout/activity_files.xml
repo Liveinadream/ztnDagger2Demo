@@ -15,8 +15,15 @@
             android:layout_below="@+id/activityTitle"
             android:layout_margin="@dimen/margin_10"/>
 
+
     <android.support.v7.widget.RecyclerView
             android:id="@+id/fileList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/path"/>
+
+    <FrameLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/path"/>
