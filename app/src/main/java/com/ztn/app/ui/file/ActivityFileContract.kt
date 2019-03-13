@@ -11,7 +11,7 @@ interface ActivityFileContract {
 
     interface View : BaseView {
 
-        fun showPath(usePath: String)
+        fun showPath()
 
         fun clickItem(path: String)
 

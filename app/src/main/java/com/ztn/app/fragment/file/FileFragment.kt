@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -47,12 +48,15 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
     //选中的文件数量
     private var selectNum = 0
 
+    lateinit var data: MutableList<FileBean>
+
 
     override fun showList(list: MutableList<FileBean>) {
         selectNum = 0
-
+        data = list
         if (adapter == null) {
             adapter = object : BaseQuickAdapter<FileBean, BaseViewHolder>(R.layout.item_flle, list) {
+
                 override fun convert(helper: BaseViewHolder, item: FileBean) {
                     helper.apply {
                         setText(R.id.name, item.name)
@@ -108,7 +112,6 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
             adapter?.emptyView = View.inflate(this.context, R.layout.no_data, LinearLayout(this.context))
             fileList.layoutManager = LinearLayoutManager(this.context)
             fileList.adapter = adapter
-
         } else {
             adapter?.setNewData(list)
         }
