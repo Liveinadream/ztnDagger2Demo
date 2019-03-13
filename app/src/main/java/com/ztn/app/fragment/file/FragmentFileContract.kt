@@ -3,7 +3,7 @@ package com.ztn.app.fragment.file
 import android.content.Intent
 import com.ztn.app.base.BaseView
 import com.ztn.app.base.IPresenter
-import com.ztn.app.model.bean.FileBean
+import com.ztn.network.bean.FileBean
 import java.io.File
 
 /**

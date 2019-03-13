@@ -1,4 +1,4 @@
-package com.ztn.app.model.bean
+package com.ztn.network.bean
 
 import java.util.*
 

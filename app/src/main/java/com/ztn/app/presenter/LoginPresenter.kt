@@ -2,9 +2,8 @@ package com.ztn.app.presenter
 
 import com.ztn.app.base.BasePresenter
 import com.ztn.app.base.contract.LoginContract
-import com.ztn.app.model.http.api.ZhihuApis
+import com.ztn.network.interfaces.ZhihuApis
 import com.ztn.app.rx.RxThread
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 

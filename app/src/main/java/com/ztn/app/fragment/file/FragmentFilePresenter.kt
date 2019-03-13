@@ -6,7 +6,7 @@ import android.os.Build
 import android.support.v4.content.FileProvider
 import android.util.Log
 import com.ztn.app.base.BasePresenter
-import com.ztn.app.model.bean.FileBean
+import com.ztn.network.bean.FileBean
 import com.ztn.app.rx.CommonOnSubscribe
 import com.ztn.common.framework.AppManager
 import io.reactivex.Observable

@@ -4,7 +4,7 @@ import com.ztn.app.BuildConfig
 import com.ztn.app.Constants
 import com.ztn.app.di.qualifier.ZhihuUrl
 import com.ztn.app.di.scope.ActivityScope
-import com.ztn.app.model.http.api.ZhihuApis
+import com.ztn.network.interfaces.ZhihuApis
 import com.ztn.app.util.SystemUtil
 import dagger.Module
 import dagger.Provides
@@ -15,7 +15,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 /**
  * Created by 冒险者ztn on 2019/2/12.
@@ -105,7 +104,8 @@ open class HttpModule {
 
     @Provides
     @ActivityScope
-    open fun provideZhihuService(@ZhihuUrl retrofit: Retrofit): ZhihuApis = retrofit.create(ZhihuApis::class.java)
+    open fun provideZhihuService(@ZhihuUrl retrofit: Retrofit): ZhihuApis = retrofit.create(
+        ZhihuApis::class.java)
 
 
     private fun createRetrofit(builder: Retrofit.Builder, client: OkHttpClient, url: String): Retrofit {
