@@ -36,6 +36,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':library')
     implementation project(':common')
+    implementation project(':network')
 
     implementation rootProject.ext.dependencies["kotlin"]
     testImplementation rootProject.ext.dependencies["junit"]
