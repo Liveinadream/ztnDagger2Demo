@@ -2,8 +2,10 @@ package com.ztn.commom.view
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
-import android.support.annotation.ColorInt
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.Point
 import android.support.annotation.Nullable
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
@@ -125,9 +127,9 @@ class DiagramView : View {
                     )
                 }
 
-                lineTo(screenWidth + xOffset + offset * i, screenHeight)
-                lineTo(xOffset + offset * i - screenWidth, screenHeight)
-                lineTo(xOffset + offset * i - screenWidth, showHeight)
+                lineTo(screenWidth, screenHeight)
+                lineTo(0f, screenHeight)
+                close()
                 canvas.drawPath(this, paint)
             }
         }
