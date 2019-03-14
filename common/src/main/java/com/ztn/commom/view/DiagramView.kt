@@ -25,11 +25,11 @@ class DiagramView : View {
 
     private var showHeight = 0f             //波浪中间高度所在位置
     private var xOffset = 0f                //波随时间的偏移量
-    private var speed = 2000f               //波的速度 2s完成一个循环
-    private var mWaveWidth = 200f           //波的宽度
+    private var speed = 1000f               //波的速度 2s完成一个循环
+    private var mWaveWidth = 500f           //波的宽度
     private var mWaveHeight = 100f          //波的高度
     private var mWaveCount = 0              //波的数量
-    private var wavesNum = 1                //几条波
+    private var wavesNum = 3               //几条波
 
 
     private var animator = ValueAnimator()
@@ -93,6 +93,9 @@ class DiagramView : View {
         animator.start()
     }
 
+    /**
+     * 设置波的数量
+     */
     private fun setWaveNums(num: Int) {
         wavesNum = num
         pathList.clear()
@@ -101,23 +104,13 @@ class DiagramView : View {
         }
     }
 
-
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        //清空之前绘制的路径
 
         canvas?.apply {
             createWaves(this, mWaveWidth / 5)
         }
 
-    }
-
-    private fun setPathMoveTo(move: Float, path: Path) {
-        path.moveTo(move, showHeight)
-    }
-
-    private fun setPathQuadTo(x1: Float, y1: Float, x2: Float, path: Path) {
-        path.quadTo(x1, y1, x2, showHeight)
     }
 
     /**
@@ -130,20 +123,20 @@ class DiagramView : View {
                 //清空之前绘制的路径
                 reset()
 
-                setPathMoveTo((-mWaveCount * 3 / 4f) - offset * pathNum, this)
+                moveTo((-mWaveCount * 3f / 4f) - offset * pathNum, showHeight)
 
                 for (i in 0..mWaveCount) {
-                    setPathQuadTo(
+                    quadTo(
                         -mWaveWidth * 3 / 4 + i * mWaveWidth + xOffset - offset * pathNum,
                         showHeight + mWaveHeight,
                         -mWaveWidth / 2 + i * mWaveWidth + xOffset - offset * pathNum,
-                        this
+                        showHeight
                     )
-                    setPathQuadTo(
+                    quadTo(
                         -mWaveWidth / 4 + i * mWaveWidth + xOffset - offset * pathNum,
                         showHeight - mWaveHeight,
                         i * mWaveWidth + xOffset - offset * pathNum,
-                        this
+                        showHeight
                     )
                 }
 
@@ -155,9 +148,9 @@ class DiagramView : View {
                 canvas.drawPath(this, paint)
             }
         }
-
-
     }
+
+
 
 
 }
