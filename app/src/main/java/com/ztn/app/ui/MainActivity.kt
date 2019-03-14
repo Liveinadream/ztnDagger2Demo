@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import com.ztn.app.R
 import com.ztn.app.ui.file.FileActivity
+import com.ztn.app.ui.view.DiagramActivity
 import com.ztn.common.ToastHelper
 import com.ztn.common.utils.animation.viewClick
 
@@ -108,8 +109,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.show_file_in_phone -> {
                 FileActivity.startWithNothing(this)
             }
-            R.id.nav_share -> {
-
+            R.id.selfView -> {
+                DiagramActivity.startWithNothing(this)
             }
             R.id.nav_send -> {
 
