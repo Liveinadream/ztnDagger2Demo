@@ -2,10 +2,7 @@ package com.ztn.commom.view
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.Point
+import android.graphics.*
 import android.support.annotation.Nullable
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
@@ -20,28 +17,33 @@ import com.ztn.commom.R
  */
 class DiagramView : View {
 
-
     private var paint: Paint = Paint()
     private var pathList = ArrayList<Path>()
-    private var showHeight = 0f         //波浪中间高度所在位置
-    private var screenWidth = 0f        //绘制宽度
-    private var screenHeight = 0f       //绘制高度
-    private var xOffset = 0f            //随时间偏移量
-    private var mWaveHeight = 100f      //浪的高度
-    private var speed = 2000f
-    private var mWaveWidth = 200f
-    private var mWaveCount = 0
+
+    private var screenWidth = 0f
+    private var screenHeight = 0f
+
+    private var showHeight = 0f             //波浪中间高度所在位置
+    private var xOffset = 0f                //波随时间的偏移量
+    private var speed = 2000f               //波的速度 2s完成一个循环
+    private var mWaveWidth = 200f           //波的宽度
+    private var mWaveHeight = 100f          //波的高度
+    private var mWaveCount = 0              //波的数量
+    private var wavesNum = 1                //几条波
+
 
     private var animator = ValueAnimator()
 
 
     constructor(context: Context) : super(context) {
         initPaint(context)
+        initWave()
         initAnimator()
     }
 
     constructor(context: Context, @Nullable attrs: AttributeSet) : super(context, attrs) {
         initPaint(context)
+        initWave()
         initAnimator()
     }
 
@@ -58,13 +60,19 @@ class DiagramView : View {
         paint.style = Paint.Style.FILL
         paint.isAntiAlias = true
         paint.strokeWidth = 0f
+    }
+
+    /**
+     * 初始化波
+     */
+    private fun initWave() {
         pathList = ArrayList()
-        setPaths(3)
+        setWaveNums(wavesNum)
         if (showHeight == 0f) {
             showHeight = 100f
         }
 
-        mWaveCount = Math.round(screenWidth / mWaveWidth + 1.5).toInt()
+        mWaveCount = Math.round(screenWidth / mWaveWidth + 2.5).toInt()
     }
 
     /**
@@ -85,20 +93,31 @@ class DiagramView : View {
         animator.start()
     }
 
-    private fun setPaths(num: Int) {
+    private fun setWaveNums(num: Int) {
+        wavesNum = num
         pathList.clear()
         for (i in 0 until num) {
             pathList.add(Path())
         }
     }
 
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
+        //清空之前绘制的路径
 
         canvas?.apply {
-            createWaves(canvas, mWaveWidth / 5)
+            createWaves(this, mWaveWidth / 5)
         }
+
+    }
+
+    private fun setPathMoveTo(move: Float, path: Path) {
+        path.moveTo(move, showHeight)
+    }
+
+    private fun setPathQuadTo(x1: Float, y1: Float, x2: Float, path: Path) {
+        path.quadTo(x1, y1, x2, showHeight)
     }
 
     /**
@@ -106,35 +125,39 @@ class DiagramView : View {
      */
     private fun createWaves(canvas: Canvas, offset: Float) {
 
-        for (i in 0 until pathList.size) {
-            pathList[i].apply {
+        for (pathNum in 0 until pathList.size) {
+            pathList[pathNum].apply {
                 //清空之前绘制的路径
                 reset()
 
-                moveTo((-mWaveCount * 3 / 4f), showHeight)
-                for (j in 0..mWaveCount) {
-                    quadTo(
-                        -mWaveWidth * 3 / 4 + i * mWaveWidth + xOffset + offset * i,
+                setPathMoveTo((-mWaveCount * 3 / 4f) - offset * pathNum, this)
+
+                for (i in 0..mWaveCount) {
+                    setPathQuadTo(
+                        -mWaveWidth * 3 / 4 + i * mWaveWidth + xOffset - offset * pathNum,
                         showHeight + mWaveHeight,
-                        -mWaveWidth / 2 + i * mWaveWidth + xOffset + offset * i,
-                        showHeight
+                        -mWaveWidth / 2 + i * mWaveWidth + xOffset - offset * pathNum,
+                        this
                     )
-                    quadTo(
-                        -mWaveWidth / 4 + i * mWaveWidth + xOffset + offset * i,
+                    setPathQuadTo(
+                        -mWaveWidth / 4 + i * mWaveWidth + xOffset - offset * pathNum,
                         showHeight - mWaveHeight,
-                        i * mWaveWidth + xOffset + offset * i,
-                        showHeight
+                        i * mWaveWidth + xOffset - offset * pathNum,
+                        this
                     )
                 }
 
+                //铺满波浪线下方,形成封闭区
                 lineTo(screenWidth, screenHeight)
                 lineTo(0f, screenHeight)
                 close()
+
                 canvas.drawPath(this, paint)
             }
         }
 
 
     }
+
 
 }
