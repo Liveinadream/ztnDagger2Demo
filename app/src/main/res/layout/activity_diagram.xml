@@ -22,7 +22,7 @@
             app:layout_constraintEnd_toStartOf="parent"
             android:layout_below="@id/diagramTitle"/>
 
-    <com.ztn.commom.view.DiagramView
+    <com.ztn.commom.view.DiagramViewWithSurface
             android:id="@+id/diagramView"
             android:layout_width="match_parent"
             android:layout_height="100dp"
