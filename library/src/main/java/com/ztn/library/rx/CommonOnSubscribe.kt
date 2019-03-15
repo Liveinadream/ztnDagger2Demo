@@ -1,4 +1,4 @@
-package com.ztn.app.rx
+package com.ztn.library.rx
 
 import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe

@@ -6,7 +6,7 @@ import android.graphics.*
 import android.support.annotation.Nullable
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
-import android.view.View
+import android.view.SurfaceView
 import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import com.orhanobut.logger.Logger
@@ -20,7 +20,7 @@ import io.reactivex.disposables.CompositeDisposable
  * Created by 冒险者ztn on 2019/3/14.
  * 曲线图
  */
-class DiagramView : View {
+class DiagramViewWithSurface : SurfaceView, Runnable {
 
     private var paint: Paint = Paint()
     private var pathList = ArrayList<Path>()
@@ -100,13 +100,6 @@ class DiagramView : View {
     }
 
     /**
-     * 动画倒转
-     */
-    fun setAnimatorReverse() {
-        animator.reverse()
-    }
-
-    /**
      * 设置波的数量
      */
     fun setWaveNums(num: Int) {
@@ -127,15 +120,27 @@ class DiagramView : View {
         setWaveNums(wavesNum)
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
+//    override fun onDraw(canvas: Canvas?) {
+//        super.onDraw(canvas)
+//
+//        canvas?.apply {
+//            createWaves(this, mWaveWidth / 5)
+//        }
+//
+//    }
 
-        canvas?.apply {
+    override fun run() {
+        while (true) {
+            if (!holder.surface.isValid) {
+                continue
+            }
+            val canvas = holder.lockCanvas()
             clear()
-            createWaves(this, mWaveWidth / 5)
+            createWaves(canvas,mWaveWidth / 5)
+            holder.unlockCanvasAndPost(canvas)
         }
-
     }
+
 
     /**
      * 创建多条波浪线

@@ -38,6 +38,7 @@ class DiagramActivity : SimpleActivity() {
 
         sure.setOnClickListener {
             diagramView.setWaveNums(waveNum.text.toString().toInt())
+            diagramView. setAnimatorReverse()
             if (score.text.toString().toFloat() in 0.0..100.0) {
                 roundView.setScore(score.text.toString().toFloat())
             } else {
