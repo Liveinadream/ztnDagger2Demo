@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.ztn.app.R
 import com.ztn.app.base.SimpleActivity
+import com.ztn.common.ToastHelper
 import kotlinx.android.synthetic.main.activity_diagram.*
 import kotlinx.android.synthetic.main.base_activity_title.*
 
@@ -31,7 +32,18 @@ class DiagramActivity : SimpleActivity() {
         super.onViewCreated()
         activityTitle.text = "曲线图"
 
-//        diagramView.setWaveNums(1)
+        diagramView.setWaveNums(1)
+
+        roundView.setScore(20f)
+
+        sure.setOnClickListener {
+            diagramView.setWaveNums(waveNum.text.toString().toInt())
+            if (score.text.toString().toFloat() in 0.0..100.0) {
+                roundView.setScore(score.text.toString().toFloat())
+            } else {
+                ToastHelper.showToast("分数不合理")
+            }
+        }
     }
 
 }

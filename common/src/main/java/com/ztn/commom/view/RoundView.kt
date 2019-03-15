@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.LinearInterpolator
 import com.ztn.common.utils.dip2px
 
 /**
@@ -13,11 +14,14 @@ import com.ztn.common.utils.dip2px
  */
 class RoundView : View {
 
-    private var smallRoundWidth = 15f.dip2px             //小圆点宽度
-    private lateinit var progressAnimator: ValueAnimator      //进度条
+    private var smallRoundWidth = 15f.dip2px               //小圆点宽度
     private var dia = 180f.dip2px
     private val arcMargin = 20f.dip2px
+    private val speed = 2000
 
+    private var progressAnimator = ValueAnimator()              //进度条动画
+    private var score = 50f                                     //最终分数
+    private var showScore = 0f                                  //动画展示分数
 
     //几种画笔
     private var arcPaint = Paint() //大圆画笔
@@ -27,17 +31,18 @@ class RoundView : View {
     private var arcPath = Path()
     private var arcScorePath = Path()
     private var smallRoundPath = Path()
-    private var score = 10f
     private lateinit var arc: RectF
     private var canvas: Canvas? = null
 
 
     constructor(context: Context) : super(context) {
         initPaint()
+        initAnimator()
     }
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         initPaint()
+        initAnimator()
     }
 
 
@@ -57,6 +62,23 @@ class RoundView : View {
         arcScorePaint.color = Color.WHITE
         arcScorePaint.strokeCap = Paint.Cap.ROUND
 
+    }
+
+
+    /**
+     * 动画/m
+     */
+    private fun initAnimator() {
+        progressAnimator.setFloatValues(0f, score)
+        progressAnimator.duration = speed.toLong()
+        progressAnimator.interpolator = LinearInterpolator()
+
+        progressAnimator.addUpdateListener {
+            val change = it.animatedValue as Float
+            showScore = change
+            invalidate()
+        }
+        progressAnimator.start()
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -101,14 +123,19 @@ class RoundView : View {
             dia + arcMargin
         )
 
-        arcScorePath.addArc(arc, 150f - 5f, 240f / 100f * score - 5f)
+        arcScorePath.addArc(arc, 150f - 5f, 240f / 100f * showScore - 5f)
         canvas.drawPath(arcScorePath, arcScorePaint)
 
     }
 
-    private fun setScore(score: Float) {
+    /**
+     * 设置分数
+     */
+    fun setScore(score: Float) {
         this.score = score
-        canvas?.restore()
+        progressAnimator = ValueAnimator()
+        showScore = 0f
+        initAnimator()
 
     }
 
@@ -116,7 +143,7 @@ class RoundView : View {
     private fun drawSmallRound(canvas: Canvas) {
         smallRoundPath.reset()
 
-        smallRoundPath.addArc(arc, 150f + 240f / 100f * score, 0.1f)
+        smallRoundPath.addArc(arc, 150f + 240f / 100f * showScore, 0.1f)
 
         canvas.drawPath(smallRoundPath, arcScorePaint)
 

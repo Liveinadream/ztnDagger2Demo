@@ -19,4 +19,7 @@
     <string name="short_default_string">default</string>
     <string name="default_string">default_string</string>
     <string name="logo_setting">这是一张图片</string>
+    <string name="wave_num">波的个数</string>
+    <string name="score">分数</string>
+    <string name="sure">确认</string>
 </resources>
