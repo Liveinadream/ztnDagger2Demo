@@ -96,12 +96,21 @@ class DiagramView : View {
     /**
      * 设置波的数量
      */
-    private fun setWaveNums(num: Int) {
+    fun setWaveNums(num: Int) {
         wavesNum = num
         pathList.clear()
         for (i in 0 until num) {
             pathList.add(Path())
         }
+    }
+
+    /**
+     * 设置波的宽度
+     */
+    fun setWaveWidth(width: Float) {
+        mWaveWidth = width
+        mWaveCount = Math.round(screenWidth / mWaveWidth + 2.5).toInt()
+        setWaveNums(wavesNum)
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -149,8 +158,6 @@ class DiagramView : View {
             }
         }
     }
-
-
 
 
 }

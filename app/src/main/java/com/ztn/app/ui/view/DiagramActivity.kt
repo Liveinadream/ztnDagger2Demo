@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.ztn.app.R
 import com.ztn.app.base.SimpleActivity
+import kotlinx.android.synthetic.main.activity_diagram.*
 import kotlinx.android.synthetic.main.base_activity_title.*
 
 /**
@@ -30,6 +31,7 @@ class DiagramActivity : SimpleActivity() {
         super.onViewCreated()
         activityTitle.text = "曲线图"
 
+//        diagramView.setWaveNums(1)
     }
 
 }
