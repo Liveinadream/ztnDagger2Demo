@@ -6,7 +6,7 @@ import android.graphics.*
 import android.support.annotation.Nullable
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
-import android.view.View
+import android.view.SurfaceView
 import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import com.orhanobut.logger.Logger
@@ -15,15 +15,17 @@ import com.ztn.library.rx.CommonOnSubscribe
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.disposables.CompositeDisposable
+import java.util.*
 
 /**
  * Created by 冒险者ztn on 2019/3/14.
  * 曲线图
  */
-class DiagramView : View {
+class DiagramViewWithSurface : SurfaceView, Runnable {
 
-    private var paint: Paint = Paint()
-    private var pathList = ArrayList<Path>()
+    private var paint = Paint()
+    private var paint2 = Paint()
+    private var pathList = Vector<Path>()
 
     private var screenWidth = 0f
     private var screenHeight = 0f
@@ -35,6 +37,8 @@ class DiagramView : View {
     private var mWaveHeight = 100f          //波的高度
     private var mWaveCount = 0              //波的数量
     private var wavesNum = 3               //几条波
+    private lateinit var background: Bitmap
+    private var flag = true
 
 
     private var animator = ValueAnimator()
@@ -66,13 +70,20 @@ class DiagramView : View {
         paint.style = Paint.Style.FILL
         paint.isAntiAlias = true
         paint.strokeWidth = 0f
+
+        paint2.color = Color.WHITE
+
+        background = BitmapFactory.decodeResource(
+            context.resources,
+            R.drawable.dir
+        )
     }
 
     /**
      * 初始化波
      */
     private fun initWave() {
-        pathList = ArrayList()
+        pathList = Vector()
         setWaveNums(wavesNum)
         if (showHeight == 0f) {
             showHeight = 100f
@@ -93,17 +104,9 @@ class DiagramView : View {
         animator.addUpdateListener {
             val change = it.animatedValue as Float
             xOffset = change
-//            createShader()
             invalidate()
         }
         animator.start()
-    }
-
-    /**
-     * 动画倒转
-     */
-    fun setAnimatorReverse() {
-        animator.reverse()
     }
 
     /**
@@ -116,6 +119,7 @@ class DiagramView : View {
         for (i in 0 until num) {
             pathList.add(Path())
         }
+
     }
 
     /**
@@ -127,69 +131,75 @@ class DiagramView : View {
         setWaveNums(wavesNum)
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-
-        canvas?.apply {
-            clear()
-            createWaves(this, mWaveWidth / 5)
+    override fun run() {
+        while (true) {
+            if (!holder.surface.isValid) {
+                continue
+            }
+            val canvas = holder.lockCanvas()
+            if(canvas!=null){
+                canvas.drawBitmap(background, 0f, 0f, paint2)
+                clear()
+                createWaves(canvas, mWaveWidth / 5)
+                holder.unlockCanvasAndPost(canvas)
+            }
         }
-
     }
+
 
     /**
      * 创建多条波浪线
      */
     private fun createWaves(canvas: Canvas, offset: Float) {
 
-        for (pathNum in 0 until pathList.size) {
+        synchronized(pathList) {
+            for (pathNum in 0 until pathList.size) {
+                pathList[pathNum].apply {
+                    val path = this
 
+                    val dispose = Observable.create(object : CommonOnSubscribe<Path>() {
+                        override fun work(e: ObservableEmitter<Path>) {
+                            path.apply {
+                                //清空之前绘制的路径
+                                reset()
+                                moveTo((-mWaveCount * 3f / 4f) - offset * pathNum, showHeight)
 
-            pathList[pathNum].apply {
-                val path = this
+                                for (i in 0..mWaveCount) {
+                                    quadTo(
+                                        -mWaveWidth * 3 / 4 + i * mWaveWidth + xOffset - offset * pathNum,
+                                        showHeight + mWaveHeight,
+                                        -mWaveWidth / 2 + i * mWaveWidth + xOffset - offset * pathNum,
+                                        showHeight
+                                    )
+                                    quadTo(
+                                        -mWaveWidth / 4 + i * mWaveWidth + xOffset - offset * pathNum,
+                                        showHeight - mWaveHeight,
+                                        i * mWaveWidth + xOffset - offset * pathNum,
+                                        showHeight
+                                    )
+                                }
 
-                val dispose = Observable.create(object : CommonOnSubscribe<Path>() {
-                    override fun work(e: ObservableEmitter<Path>) {
-                        path.apply {
-                            //清空之前绘制的路径
-                            reset()
-
-                            moveTo((-mWaveCount * 3f / 4f) - offset * pathNum, showHeight)
-
-                            for (i in 0..mWaveCount) {
-                                quadTo(
-                                    -mWaveWidth * 3 / 4 + i * mWaveWidth + xOffset - offset * pathNum,
-                                    showHeight + mWaveHeight,
-                                    -mWaveWidth / 2 + i * mWaveWidth + xOffset - offset * pathNum,
-                                    showHeight
-                                )
-                                quadTo(
-                                    -mWaveWidth / 4 + i * mWaveWidth + xOffset - offset * pathNum,
-                                    showHeight - mWaveHeight,
-                                    i * mWaveWidth + xOffset - offset * pathNum,
-                                    showHeight
-                                )
+                                //铺满波浪线下方,形成封闭区
+                                lineTo(screenWidth, screenHeight)
+                                lineTo(0f, screenHeight)
+                                close()
                             }
+                            e.onNext(path)
+                            e.onComplete()
 
-                            //铺满波浪线下方,形成封闭区
-                            lineTo(screenWidth, screenHeight)
-                            lineTo(0f, screenHeight)
-                            close()
                         }
-                        e.onNext(path)
-                        e.onComplete()
+                    }).subscribe({
+                        canvas.drawPath(it, paint)
 
-                    }
-                }).subscribe({
-                    canvas.drawPath(it, paint)
+                    }, {
+                        Logger.e(it.message)
+                    })
 
-                }, {
-                    Logger.e(it.message)
-                })
-
-                compositeDisposable.add(dispose)
+                    compositeDisposable.add(dispose)
+                }
             }
         }
+
     }
 
     private fun clear() {
@@ -198,6 +208,14 @@ class DiagramView : View {
         if (!compositeDisposable.isDisposed) {
             compositeDisposable.clear()
         }
+    }
+
+    fun pause() {
+        flag = false
+    }
+
+    fun resume() {
+        flag = true
     }
 
 
