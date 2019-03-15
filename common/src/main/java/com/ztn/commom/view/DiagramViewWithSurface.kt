@@ -38,6 +38,7 @@ class DiagramViewWithSurface : SurfaceView, Runnable {
     private var mWaveCount = 0              //波的数量
     private var wavesNum = 3               //几条波
     private lateinit var background: Bitmap
+    private var flag = true
 
 
     private var animator = ValueAnimator()
@@ -136,10 +137,12 @@ class DiagramViewWithSurface : SurfaceView, Runnable {
                 continue
             }
             val canvas = holder.lockCanvas()
-            canvas.drawBitmap(background, 0f, 0f, paint2)
-            clear()
-            createWaves(canvas, mWaveWidth / 5)
-            holder.unlockCanvasAndPost(canvas)
+            if(canvas!=null){
+                canvas.drawBitmap(background, 0f, 0f, paint2)
+                clear()
+                createWaves(canvas, mWaveWidth / 5)
+                holder.unlockCanvasAndPost(canvas)
+            }
         }
     }
 
@@ -149,7 +152,7 @@ class DiagramViewWithSurface : SurfaceView, Runnable {
      */
     private fun createWaves(canvas: Canvas, offset: Float) {
 
-        synchronized(pathList){
+        synchronized(pathList) {
             for (pathNum in 0 until pathList.size) {
                 pathList[pathNum].apply {
                     val path = this
@@ -205,6 +208,14 @@ class DiagramViewWithSurface : SurfaceView, Runnable {
         if (!compositeDisposable.isDisposed) {
             compositeDisposable.clear()
         }
+    }
+
+    fun pause() {
+        flag = false
+    }
+
+    fun resume() {
+        flag = true
     }
 
 

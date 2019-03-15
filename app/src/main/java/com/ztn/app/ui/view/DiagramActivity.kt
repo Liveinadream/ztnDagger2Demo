@@ -57,4 +57,9 @@ class DiagramActivity : SimpleActivity() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        diagramView.pause()
+    }
+
 }
