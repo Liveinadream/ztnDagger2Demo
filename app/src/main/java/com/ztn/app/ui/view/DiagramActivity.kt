@@ -2,6 +2,7 @@ package com.ztn.app.ui.view
 
 import android.content.Context
 import android.content.Intent
+import com.orhanobut.logger.Logger
 import com.ztn.app.R
 import com.ztn.app.base.SimpleActivity
 import com.ztn.common.ToastHelper
@@ -37,8 +38,10 @@ class DiagramActivity : SimpleActivity() {
                 diagramView.run()
             }.start()
         } catch (e: InterruptedException) {
+            Logger.e(e.message)
 
         } catch (e: IllegalStateException) {
+            Logger.e(e.message)
 
         }
 
@@ -47,7 +50,13 @@ class DiagramActivity : SimpleActivity() {
         roundView.setScore(20f)
 
         sure.setOnClickListener {
-            diagramView.setWaveNums(waveNum.text.toString().toInt())
+
+            if (waveNum.text.toString().toInt() <= 0) {
+                ToastHelper.showToast("至少一条线")
+            } else {
+                diagramView.setWaveNums(waveNum.text.toString().toInt())
+            }
+
 //            diagramView. setAnimatorReverse()
             if (score.text.toString().toFloat() in 0.0..100.0) {
                 roundView.setScore(score.text.toString().toFloat())
@@ -60,6 +69,11 @@ class DiagramActivity : SimpleActivity() {
     override fun onPause() {
         super.onPause()
         diagramView.pause()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        diagramView.resume()
     }
 
 }
