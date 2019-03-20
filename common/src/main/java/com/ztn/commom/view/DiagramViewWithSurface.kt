@@ -11,6 +11,9 @@ import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import com.orhanobut.logger.Logger
 import com.ztn.commom.R
+import com.ztn.common.utils.lock
+import com.ztn.common.utils.notifyAll
+import com.ztn.common.utils.wait
 import com.ztn.library.rx.CommonOnSubscribe
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
@@ -32,7 +35,7 @@ class DiagramViewWithSurface : SurfaceView, Runnable {
 
     private var showHeight = 0f             //波浪中间高度所在位置
     private var xOffset = 0f                //波随时间的偏移量
-    private var speed = 1000f               //波的速度 2s完成一个循环
+    private var speed = 5000f               //波的速度 1s完成一个循环
     private var mWaveWidth = 500f           //波的宽度
     private var mWaveHeight = 100f          //波的高度
     private var mWaveCount = 0              //波的数量
@@ -133,16 +136,24 @@ class DiagramViewWithSurface : SurfaceView, Runnable {
 
     override fun run() {
         while (true) {
-            if (!holder.surface.isValid) {
-                continue
+
+            if (flag) {
+                if (!holder.surface.isValid) {
+                    continue
+                }
+                val canvas = holder.lockCanvas()
+                if (canvas != null) {
+                    canvas.drawBitmap(background, 0f, 0f, paint2)
+                    clear()
+                    createWaves(canvas, mWaveWidth / 5)
+                    holder.unlockCanvasAndPost(canvas)
+                }
+            } else {
+                synchronized(this){
+                    wait()
+                }
             }
-            val canvas = holder.lockCanvas()
-            if(canvas!=null){
-                canvas.drawBitmap(background, 0f, 0f, paint2)
-                clear()
-                createWaves(canvas, mWaveWidth / 5)
-                holder.unlockCanvasAndPost(canvas)
-            }
+
         }
     }
 
@@ -216,6 +227,9 @@ class DiagramViewWithSurface : SurfaceView, Runnable {
 
     fun resume() {
         flag = true
+        lock {
+            notifyAll()
+        }
     }
 
 

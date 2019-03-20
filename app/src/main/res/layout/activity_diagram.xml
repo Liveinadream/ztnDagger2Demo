@@ -4,14 +4,14 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
         android:id="@+id/parent"
         android:layout_height="match_parent">
+
     <include layout="@layout/base_activity_title"
              app:layout_constraintTop_toTopOf="parent"
              app:layout_constraintEnd_toEndOf="parent"
              app:layout_constraintStart_toStartOf="parent"
              android:id="@+id/diagramTitle"/>
 
-
-    <com.ztn.commom.view.RoundView
+    <com.ztn.commom.view.RoundViewUsePath
             android:id="@+id/roundView"
             android:layout_width="match_parent"
             android:layout_height="300dp"
@@ -41,7 +41,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:hint="@string/wave_num"
             android:text="1"
-    />
+            android:autofillHints=""/>
 
     <EditText
             android:id="@+id/score"
@@ -52,8 +52,7 @@
             android:padding="@dimen/margin_5"
             app:layout_constraintEnd_toEndOf="parent"
             android:hint="@string/score"
-            android:text="20"
-    />
+            android:text="20"/>
 
     <Button
             android:id="@+id/sure"
@@ -64,6 +63,5 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="20dp"
             android:text="@string/sure"/>
-
 
 </android.support.constraint.ConstraintLayout>
