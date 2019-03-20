@@ -26,7 +26,6 @@ class RoundViewUsePath : View {
     //几种画笔
     private var arcPaint = Paint() //大圆画笔
     private var arcScorePaint = Paint() //小圆画笔
-    private var textPaint = Paint()
 
     private var arcPath = Path()
     private var arcScorePath = Path()

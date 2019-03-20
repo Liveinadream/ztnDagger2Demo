@@ -3,7 +3,6 @@ package com.ztn.commom.view
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
@@ -11,7 +10,7 @@ import com.ztn.common.utils.dip2px
 
 /**
  * Created by 冒险者ztn on 2019/3/15.
- * 一个圆形 view
+ * 一个使用 canvas 绘制圆形 view
  */
 class RoundViewUseCanvas : View {
 
@@ -29,9 +28,7 @@ class RoundViewUseCanvas : View {
     private var arcPaint = Paint() //大圆画笔
     private var arcScorePaint = Paint() //小圆画笔
     private var roundPaint = Paint() //小圆画笔
-    private var textPaint = Paint()
 
-    private var smallRoundPath = Path()
     private var arc: RectF? = null
     private var canvas: Canvas? = null
 
