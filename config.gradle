@@ -49,6 +49,7 @@ ext {
             "retrofit-adapter-rxjava2"  : "com.squareup.retrofit2:adapter-rxjava2:${dependVersion.retrofit}",
             "okhttp"                    : "com.squareup.okhttp3:okhttp:${dependVersion.okhttp}",
             "okhttp-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp}",
+            "okhttp—mockwebserver"      : "com.squareup.okhttp3:mockwebserver:${dependVersion.okhttp}",
 
             //di
             "dagger"                    : "com.google.dagger:dagger:${dependVersion.dagger2}",
