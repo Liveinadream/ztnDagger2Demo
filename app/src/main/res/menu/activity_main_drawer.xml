@@ -22,16 +22,16 @@
                 android:title="@string/ztn_file_manager"/>
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/another_title">
         <menu>
             <item
                     android:id="@+id/selfView"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="自定义view"/>
+                    android:title="@string/self_view"/>
             <item
-                    android:id="@+id/nav_send"
+                    android:id="@+id/friend"
                     android:icon="@drawable/ic_menu_send"
-                    android:title="Send"/>
+                    android:title="@string/chat"/>
         </menu>
     </item>
 

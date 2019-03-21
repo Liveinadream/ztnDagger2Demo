@@ -2,6 +2,7 @@ package com.ztn.app.socket
 
 import com.orhanobut.logger.Logger
 import com.ztn.app.ui.chat.FriendActivity
+import com.ztn.common.ToastHelper
 import com.ztn.network.GsonUtil
 import okhttp3.Response
 import okhttp3.WebSocket
@@ -55,6 +56,7 @@ open class ZtnWebSocketListener(private val activity: FriendActivity) : WebSocke
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         super.onFailure(webSocket, t, response)
+        ToastHelper.showToast("连接失败")
         outputMessage("failure${t.message}")
 
     }
@@ -70,7 +72,6 @@ open class ZtnWebSocketListener(private val activity: FriendActivity) : WebSocke
         mapHead["qrCode"] = "123456"
         return buildRequestParams(mapHead)
     }
-
 
     companion object {
 

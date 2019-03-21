@@ -1,6 +1,9 @@
 package com.ztn.app.ui.chat
 
+import android.content.Context
+import android.content.Intent
 import android.os.Handler
+import com.orhanobut.logger.Logger
 import com.ztn.app.R
 import com.ztn.app.base.BaseActivity
 import com.ztn.app.socket.ZtnWebSocketListener
@@ -16,6 +19,10 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View {
 
     companion object {
         const val HEART_BEAT_RATE = 2 * 1000L
+
+        fun startWithNothing(context: Context) {
+            context.startActivity(Intent(context, FriendActivity::class.java))
+        }
     }
 
     lateinit var socketListener: ZtnWebSocketListener
@@ -45,14 +52,14 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View {
 
     override fun initEventAndData() {
         mPresenter.attachView(this)
-
-        socketListener = object : ZtnWebSocketListener(this@FriendActivity) {}
-        mWebSocket = socketListener.webSocket
-
     }
 
     override fun onViewCreated() {
         super.onViewCreated()
+
+        Logger.d("FriendActivity界面")
+        socketListener = object : ZtnWebSocketListener(this@FriendActivity) {}
+        mWebSocket = socketListener.webSocket
 
         mHandler = Handler()
 
@@ -62,7 +69,7 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View {
             .connectTimeout(3, TimeUnit.SECONDS)
             .build()
 
-        val request = Request.Builder().url("192.168.1.102/WebSocket/api/message").build()
+        val request = Request.Builder().url("http://192.168.1.102/WebSocket/api/message").build()
 
         mHandler?.postDelayed(heartBeatRunnable, HEART_BEAT_RATE)
         okHttpClient.newWebSocket(request, socketListener)
