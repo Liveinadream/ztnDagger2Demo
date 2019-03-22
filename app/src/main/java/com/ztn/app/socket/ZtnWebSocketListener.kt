@@ -2,7 +2,6 @@ package com.ztn.app.socket
 
 import com.orhanobut.logger.Logger
 import com.ztn.app.ui.chat.FriendActivity
-import com.ztn.common.ToastHelper
 import com.ztn.network.GsonUtil
 import okhttp3.Response
 import okhttp3.WebSocket
@@ -23,6 +22,7 @@ open class ZtnWebSocketListener(private val activity: FriendActivity) : WebSocke
         activity.apply {
             runOnUiThread {
                 Logger.d(msg)
+                addShowMsg(msg)
             }
         }
     }
@@ -30,17 +30,17 @@ open class ZtnWebSocketListener(private val activity: FriendActivity) : WebSocke
     override fun onOpen(webSocket: WebSocket, response: Response) {
         super.onOpen(webSocket, response)
         this.webSocket = webSocket
-        outputMessage("连接成功")
+        outputMessage("连接成功 \n$response")
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosing(webSocket, code, reason)
-        outputMessage("closing$reason")
+        outputMessage("closing:  $reason")
     }
 
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosed(webSocket, code, reason)
-        outputMessage("Closed$reason")
+        outputMessage("Closed:   $reason")
     }
 
     override fun onMessage(webSocket: WebSocket, text: String) {
@@ -56,9 +56,7 @@ open class ZtnWebSocketListener(private val activity: FriendActivity) : WebSocke
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         super.onFailure(webSocket, t, response)
-        ToastHelper.showToast("连接失败")
-        outputMessage("failure${t.message}")
-
+        outputMessage("failure:    ${t.message}\n ${response.toString()}")
     }
 
     fun sendHeart(): String {
@@ -77,7 +75,6 @@ open class ZtnWebSocketListener(private val activity: FriendActivity) : WebSocke
 
         fun buildRequestParams(params: Any): String {
             return GsonUtil.getInstance().toJson(params)
-
         }
     }
 

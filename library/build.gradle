@@ -71,4 +71,5 @@ dependencies {
     api rootProject.ext.dependencies["recyclerview-adapter"]
     api rootProject.ext.dependencies["logger"]
 
+    api rootProject.ext.dependencies["socket-io"]
 }
