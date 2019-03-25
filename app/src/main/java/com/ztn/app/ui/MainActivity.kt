@@ -17,6 +17,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import com.ztn.app.R
+import com.ztn.app.ui.chat.FriendActivity
 import com.ztn.app.ui.file.FileActivity
 import com.ztn.app.ui.view.DiagramActivity
 import com.ztn.common.ToastHelper
@@ -50,8 +51,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 ToastHelper.showToast("您未授予读取文件权限")
                 finish()
             }
-
         }, {}).dispose()
+
     }
 
     override fun onBackPressed() {
@@ -112,8 +113,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.selfView -> {
                 DiagramActivity.startWithNothing(this)
             }
-            R.id.nav_send -> {
-
+            R.id.friend -> {
+                FriendActivity.startWithNothing(this)
             }
         }
 

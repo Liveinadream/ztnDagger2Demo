@@ -21,6 +21,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 
 }
@@ -66,4 +71,5 @@ dependencies {
     api rootProject.ext.dependencies["recyclerview-adapter"]
     api rootProject.ext.dependencies["logger"]
 
+    api rootProject.ext.dependencies["socket-io"]
 }

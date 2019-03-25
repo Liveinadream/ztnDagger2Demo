@@ -1,11 +1,13 @@
 package com.ztn.app.base
 
 import android.app.Application
+import com.orhanobut.logger.Logger
 import com.ztn.app.di.component.AppComponent
 import com.ztn.app.di.component.DaggerActivityComponent
 import com.ztn.app.di.component.DaggerAppComponent
 import com.ztn.app.di.module.ApplicationModule
 import com.ztn.app.di.module.HttpModule
+import com.ztn.app.util.LogUtils
 import com.ztn.common.framework.AppManager
 import com.ztn.common.framework.CrashHandler
 import javax.inject.Inject
@@ -34,6 +36,8 @@ class BaseApplication : Application() {
             .applicationModule(ApplicationModule(app))
 //            .httpModule(HttpModule())
             .build()
+
+        LogUtils.init()
     }
 
     companion object {

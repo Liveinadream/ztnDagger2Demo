@@ -35,7 +35,7 @@ ext {
             "cardview-v7"               : "com.android.support:cardview-v7:${dependVersion.support}",
             "recyclerview-v7"           : "com.android.support:recyclerview-v7:${dependVersion.support}",
             "design"                    : "com.android.support:design:${dependVersion.support}",
-            "ranger"                    : "com.github.Liveinadream:Ranger:1.0.6",
+            "ranger"                    : "com.github.Liveinadream:Ranger:1.0.9",
 
             //rx
             "rxjava"                    : "io.reactivex.rxjava2:rxjava:2.2.6",
@@ -49,6 +49,7 @@ ext {
             "retrofit-adapter-rxjava2"  : "com.squareup.retrofit2:adapter-rxjava2:${dependVersion.retrofit}",
             "okhttp"                    : "com.squareup.okhttp3:okhttp:${dependVersion.okhttp}",
             "okhttp-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp}",
+            "okhttp—mockwebserver"      : "com.squareup.okhttp3:mockwebserver:${dependVersion.okhttp}",
 
             //di
             "dagger"                    : "com.google.dagger:dagger:${dependVersion.dagger2}",
@@ -60,6 +61,7 @@ ext {
 
             //IM
             "WebSocket"                 : "org.java-websocket:Java-WebSocket:1.4.0",
+            "socket-io"                 : "io.socket:socket.io-client:0.8.3",
 
             //other
             "multidex"                  : "com.android.support:multidex:1.0.3",
