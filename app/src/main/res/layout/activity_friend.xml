@@ -7,11 +7,21 @@
     <include layout="@layout/base_activity_title"
              android:id="@+id/activityTitle"/>
 
+    <EditText
+            android:id="@+id/sendMessageText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/activityTitle"
+            android:textSize="@dimen/sp_16"
+            android:hint="请输入要发送的消息"
+            android:layout_margin="@dimen/margin_5"
+            android:maxLines="1"/>
+
     <Button
             android:id="@+id/sendMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/activityTitle"
+            android:layout_below="@+id/sendMessageText"
             android:layout_margin="@dimen/margin_5"
             android:text="@string/send_message"/>
 
@@ -21,12 +31,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/sendMessage"
             android:layout_margin="@dimen/margin_5"
+            android:hint="获取到的服务器内容"
+            android:textSize="@dimen/sp_16"
             android:textColor="@color/black_3e3e3e"/>
 
     <!--<WebView-->
-            <!--android:id="@+id/webView"-->
-            <!--android:layout_below="@id/serverReturn"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"/>-->
+    <!--android:id="@+id/webView"-->
+    <!--android:layout_below="@id/serverReturn"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"/>-->
 
 </RelativeLayout>

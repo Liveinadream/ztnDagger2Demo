@@ -7,16 +7,20 @@ import android.os.Handler
 import com.orhanobut.logger.Logger
 import com.ztn.app.R
 import com.ztn.app.base.BaseActivity
+import com.ztn.app.message.MsgBean
+import com.ztn.app.message.NameValuePairs
 import com.ztn.app.socket.ZtnWebSocketListener
+import com.ztn.common.ToastHelper
+import com.ztn.network.GsonUtil
 import com.ztn.network.interceptor.UserAgentInterceptor
 import io.socket.client.IO
 import io.socket.client.Socket
-import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_friend.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import java.net.URISyntaxException
 import java.util.concurrent.TimeUnit
 
@@ -24,12 +28,12 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by 冒险者ztn on 2019/3/13.
  */
-class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View, Emitter.Listener {
+class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View {
 
 
     companion object {
         const val HEART_BEAT_RATE = 2 * 1000L
-        const val socketURI = "http://192.168.1.103:8080"
+        const val socketURI = "http://192.168.1.188:8080"
 //        const val socketURI = "ws://192.168.1.146:8080"
 
         fun startWithNothing(context: Context) {
@@ -37,14 +41,16 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View, Emi
         }
     }
 
+    private val tag = FriendActivity::class.java.name
+    private var socketState = Socket.EVENT_DISCONNECT
     lateinit var socketListener: ZtnWebSocketListener
 
     private var mSocketIO: Socket? = null
-    lateinit var emitterListener: Emitter.Listener
 
     private var mHandler: Handler? = null
     private var sendTime = 0L
     private var mWebSocket: WebSocket? = null
+    private val msgObj = JSONObject()
 
 
     override fun initInject() {
@@ -94,7 +100,6 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View, Emi
         }
         if (mSocketIO != null) {
             mSocketIO?.disconnect()
-            mSocketIO = null
         }
 
     }
@@ -115,31 +120,73 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View, Emi
     }
 
     private fun initSocketIo() {
-        emitterListener = this
         try {
-//            val opts = IO.Options()
+            val opts = IO.Options()
 //            opts.sslContext = SSLContext.getDefault()
 //            opts.hostnameVerifier = HostnameVerifier { _, _ ->
 //                return@HostnameVerifier true
 //            }
-
-            mSocketIO = IO.socket(socketURI)
+            opts.reconnection = false
+            mSocketIO = IO.socket(socketURI, opts)
         } catch (e: URISyntaxException) {
             Logger.e(e.message)
         }
 
-        mSocketIO?.on(Socket.EVENT_CONNECT, this)
-        mSocketIO?.on(Socket.EVENT_DISCONNECT, this)
-        mSocketIO?.on(Socket.EVENT_ERROR, this)
-        mSocketIO?.on(Socket.EVENT_CONNECT_TIMEOUT, this)
-
-
+        initSocketIoListener()
         mSocketIO?.connect()
-        mSocketIO?.on("sendMsg", emitterListener)
 
         sendMessage.setOnClickListener {
-            mSocketIO?.emit("receiveMsg", "client", "android端", "msg", "hello")
+
+            val str = sendMessageText.text.toString()
+            if (str.isNotEmpty()) {
+                sendMessageInSocketIo(str)
+                sendMessageText.setText("")
+            } else {
+                ToastHelper.showToast("消息内容为null")
+            }
+
         }
+    }
+
+    private fun initSocketIoListener() {
+
+        mSocketIO?.on(Socket.EVENT_CONNECT) {
+
+            Logger.d("连接建立")
+            socketState = Socket.EVENT_CONNECT
+            sendMessageInSocketIo("Android端连接已经建立")
+
+        }?.on(Socket.EVENT_DISCONNECT) {
+
+            socketState = Socket.EVENT_CONNECT
+            val str = it.map { any -> return@map any.toString() }
+            Logger.d("连接结束$str")
+            sendMessageInSocketIo("Android端的对话结束了")
+            mSocketIO = null
+
+        }?.on(Socket.EVENT_ERROR) {
+            socketState = Socket.EVENT_ERROR
+            val str = it.map { any -> return@map any.toString() }
+            Logger.e("连接出现问题$str")
+
+        }?.on(Socket.EVENT_CONNECT_TIMEOUT) {
+            socketState = Socket.EVENT_CONNECT_TIMEOUT
+            Logger.e("连接超时")
+
+        }?.on(Socket.EVENT_MESSAGE) {
+            socketState = Socket.EVENT_MESSAGE
+            val string = GsonUtil.getInstance().toJson(it[0])
+            val json = GsonUtil.getInstance().fromJson(string, MsgBean::class.java)
+
+            addText(json.nameValuePairs)
+
+        }?.on("receiveMsg") {
+            val string = GsonUtil.getInstance().toJson(it[0])
+            val json = GsonUtil.getInstance().fromJson(string, MsgBean::class.java)
+
+            addText(json.nameValuePairs)
+        }
+
     }
 
     private fun initWebSocket() {
@@ -167,14 +214,21 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View, Emi
         okHttpClient.dispatcher().executorService().shutdown()
     }
 
-    override fun call(vararg args: Any?) {
+    private fun sendMessageInSocketIo(msg: String) {
+        msgObj.put("client", "Android端")
+        msgObj.put("msg", msg)
+        mSocketIO?.emit("sendMsg", msgObj)
+        val nameValuePairs = NameValuePairs("Android端", msg)
+        addText(nameValuePairs)
+    }
 
-        // add the message to view
-        Logger.d("获得的消息$args")
-
-        val data = args[0]
-
-        Logger.d("获得的消息" + data.toString())
-
+    @SuppressLint("SetTextI18n")
+    private fun addText(name: NameValuePairs) {
+        val str = StringBuilder()
+        str.append(name.client + " ")
+        str.append(name.msg)
+        runOnUiThread {
+            serverReturn.text = serverReturn.text.toString() + "\n$str"
+        }
     }
 }
