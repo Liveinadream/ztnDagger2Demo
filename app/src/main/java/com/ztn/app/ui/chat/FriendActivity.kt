@@ -41,7 +41,6 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View {
         }
     }
 
-    private val tag = FriendActivity::class.java.name
     private var socketState = Socket.EVENT_DISCONNECT
     lateinit var socketListener: ZtnWebSocketListener
 
