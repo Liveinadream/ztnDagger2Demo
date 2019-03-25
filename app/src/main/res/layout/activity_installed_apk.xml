@@ -5,11 +5,11 @@
         android:layout_height="match_parent">
 
     <include layout="@layout/base_activity_title"
-             android:id="@+id/activityTitle"/>
+             android:id="@+id/activityTitleLayout"/>
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/installedApkList"
-            android:layout_below="@id/activityTitle"
+            android:layout_below="@id/activityTitleLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

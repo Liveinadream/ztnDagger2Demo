@@ -1,6 +1,8 @@
 package com.ztn.app.base
 
 import android.os.Bundle
+import android.widget.TextView
+import com.ztn.app.R
 import com.ztn.common.framework.AppManager
 import me.yokeyword.fragmentation.SupportActivity
 
@@ -9,6 +11,9 @@ import me.yokeyword.fragmentation.SupportActivity
  * 不需要使用 MVP 的 activity 继承该类
  * */
 abstract class SimpleActivity : SupportActivity() {
+
+    lateinit var activityTitle: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +31,7 @@ abstract class SimpleActivity : SupportActivity() {
     }
 
     protected open fun onViewCreated() {
+        activityTitle = findViewById(R.id.activityTitle)
 
     }
 

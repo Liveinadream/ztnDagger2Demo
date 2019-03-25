@@ -15,6 +15,7 @@ class SettingActivity : SimpleActivity() {
     }
 
     override fun initEventAndData() {
+        activityTitle.text = "设置"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

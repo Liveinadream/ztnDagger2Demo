@@ -32,7 +32,7 @@ class InstalledActivity : SimpleActivity() {
     }
 
     override fun initEventAndData() {
-
+        activityTitle.text = "已安装应用"
         myPackageInfo = ArrayList()
         val packageInfo = packageManager.getInstalledPackages(0)
         packageInfo.forEach {

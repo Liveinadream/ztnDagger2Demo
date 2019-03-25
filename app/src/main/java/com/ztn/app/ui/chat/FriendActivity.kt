@@ -72,10 +72,13 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View {
 
     override fun initEventAndData() {
         mPresenter.attachView(this)
+        activityTitle.text = "IM"
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated() {
         super.onViewCreated()
+
 
 //        webView.loadUrl("http://192.168.1.146:8080")
 //        initWebSocket()

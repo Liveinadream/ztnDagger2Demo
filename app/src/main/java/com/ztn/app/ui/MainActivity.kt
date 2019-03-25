@@ -21,6 +21,7 @@ import com.ztn.app.ui.chat.FriendActivity
 import com.ztn.app.ui.file.FileActivity
 import com.ztn.app.ui.view.DiagramActivity
 import com.ztn.common.ToastHelper
+import com.ztn.common.framework.AppManager
 import com.ztn.common.utils.animation.viewClick
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -28,6 +29,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        AppManager.get().addActivity(this)
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
@@ -130,6 +133,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             e.printStackTrace()
         }
         return packageInfo != null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppManager.get().removeActivity(this)
     }
 
 }

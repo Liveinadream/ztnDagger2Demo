@@ -52,6 +52,7 @@ class FileActivity : BaseActivity<ActivityFilePresenter>(), ActivityFileContract
 
     override fun initEventAndData() {
         clickPath = ArrayList()
+        activityTitle.text = "浏览文件"
     }
 
     //fragment 点击了 item 调用的方法

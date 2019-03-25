@@ -45,6 +45,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
 
 
     override fun initEventAndData() {
+        activityTitle.text = "登录"
     }
 
     override fun loginSuccess() {

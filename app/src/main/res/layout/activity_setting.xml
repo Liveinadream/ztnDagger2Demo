@@ -5,10 +5,10 @@
         android:layout_height="match_parent">
 
     <include layout="@layout/base_activity_title"
-             android:id="@+id/activityTitle"/>
+             android:id="@+id/activityTitleLayout"/>
 
     <FrameLayout
-            android:layout_below="@+id/activityTitle"
+            android:layout_below="@+id/activityTitleLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/holo_blue_bright"

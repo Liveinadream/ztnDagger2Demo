@@ -1,10 +1,10 @@
 package com.ztn.app.base
 
+import android.widget.TextView
+import com.ztn.app.R
 import com.ztn.app.di.component.ActivityComponent
 import com.ztn.app.di.component.DaggerActivityComponent
-import com.ztn.app.di.component.DaggerAppComponent
 import com.ztn.app.di.module.ActivityModule
-import com.ztn.app.di.module.ApplicationModule
 import javax.inject.Inject
 
 
@@ -16,6 +16,7 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>> : SimpleActivity(),
 
     @Inject
     protected lateinit var mPresenter: T
+
 
     fun getActivityComponent(): ActivityComponent {
         return DaggerActivityComponent

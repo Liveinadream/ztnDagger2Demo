@@ -6,13 +6,13 @@
         android:layout_height="match_parent">
 
     <include layout="@layout/base_activity_title"
-             android:id="@+id/activityTitle"/>
+             android:id="@+id/activityTitleLayout"/>
 
     <EditText
             android:id="@+id/packageName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/activityTitle"
+            app:layout_constraintTop_toBottomOf="@id/activityTitleLayout"
             android:layout_marginTop="20dp"
             android:layout_marginStart="@dimen/margin_5"
             android:layout_marginEnd="@dimen/margin_5"
