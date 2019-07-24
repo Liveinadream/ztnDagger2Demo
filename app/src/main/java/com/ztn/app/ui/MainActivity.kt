@@ -2,27 +2,30 @@ package com.ztn.app.ui
 
 import android.Manifest
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.tbruyelle.rxpermissions2.RxPermissions
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import com.ztn.app.R
 import com.ztn.app.ui.chat.FriendActivity
 import com.ztn.app.ui.file.FileActivity
-import com.ztn.app.ui.view.DiagramActivity
+import com.ztn.app.ui.view.DoodlingActivity
+import com.ztn.commom.utils.FaceUtils
 import com.ztn.common.ToastHelper
 import com.ztn.common.framework.AppManager
 import com.ztn.common.utils.animation.viewClick
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -46,15 +49,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        RxPermissions(this).request(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ).subscribe({
-            if (!it) {
-                ToastHelper.showToast("您未授予读取文件权限")
-                finish()
-            }
-        }, {}).dispose()
+
+        testImage.post {
+            testImage.setImageBitmap(
+                FaceUtils.getDefaultPortrait(testImage, "张天宁", "Android 开发")
+            )
+        }
+        writePermission.setOnClickListener {
+            RxPermissions(this).request(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ).subscribe({
+                if (!it) {
+                    ToastHelper.showToast("您未授予读取文件权限")
+                    finish()
+                }
+            }, {}).dispose()
+        }
+
+        createFile.setOnClickListener {
+            openFileOutput("test" + System.currentTimeMillis(), Context.MODE_PRIVATE)
+        }
 
     }
 
@@ -114,7 +129,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 FileActivity.startWithNothing(this)
             }
             R.id.selfView -> {
-                DiagramActivity.startWithNothing(this)
+                DoodlingActivity.startWithNothing(this)
+//                DiagramActivity.startWithNothing(this)
             }
             R.id.friend -> {
                 FriendActivity.startWithNothing(this)

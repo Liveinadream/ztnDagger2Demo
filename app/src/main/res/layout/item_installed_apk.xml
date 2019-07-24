@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="68dp"
+        android:background="@color/white_6f"
         android:orientation="vertical">
 
     <ImageView
@@ -13,70 +13,62 @@
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:layout_margin="@dimen/dp_10"
-            android:contentDescription="@string/headImg"
-            app:layout_constraintBottom_toBottomOf="@id/parent"
-            app:layout_constraintStart_toStartOf="@id/parent"
-            app:layout_constraintTop_toTopOf="@id/parent"
-            />
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/headImg"/>
 
-    <android.support.constraint.Guideline
+    <View
             android:id="@+id/centerLine"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5"/>
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"/>
 
     <TextView
             android:id="@+id/name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
             android:text="@string/short_default_string"
+            android:layout_toEndOf="@+id/headImg"
+            android:layout_above="@+id/centerLine"
             android:textColor="@color/black_3e3e3e"
             android:background="@android:color/holo_blue_bright"
-            android:textSize="@dimen/sp_17"
-            app:layout_constraintBottom_toBottomOf="@+id/centerLine"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@id/headImg"/>
+            android:textSize="@dimen/sp_17"/>
 
     <TextView
             android:id="@+id/packageName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/name"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:layout_above="@+id/centerLine"
+            android:marqueeRepeatLimit="marquee_forever"
             android:gravity="start"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:text="@string/default_string"
-            android:textColor="@color/gray_868686"
-            app:layout_constraintBottom_toBottomOf="@+id/name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@id/name"/>
+            android:textColor="@color/gray_868686"/>
 
 
     <TextView
             android:id="@+id/content"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
             android:ellipsize="end"
+            android:layout_toEndOf="@+id/headImg"
+            android:layout_below="@+id/centerLine"
+            android:padding="@dimen/dp_4"
             android:maxLines="1"
             android:text="@string/default_string"
-            android:textColor="@color/gray_868686"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/headImg"
-            app:layout_constraintTop_toBottomOf="@+id/centerLine"/>
+            android:textColor="@color/gray_868686"/>
 
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/headImg"
             android:layout_marginStart="@dimen/margin_10"
-            android:background="@color/gray_dc"
-            app:layout_constraintBottom_toBottomOf="@id/parent"/>
+            android:background="@color/gray_dc"/>
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

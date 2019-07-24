@@ -136,7 +136,12 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View {
 
         initSocketIoListener()
         mSocketIO?.connect()
+        mSocketIO?.let {
 
+        }
+        mSocketIO.apply {
+
+        }
         sendMessage.setOnClickListener {
 
             val str = sendMessageText.text.toString()

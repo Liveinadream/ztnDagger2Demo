@@ -17,7 +17,5 @@ interface ActivityFileContract {
 
     }
 
-    interface Present : IPresenter<View> {
-
-    }
+    interface Present : IPresenter<View>
 }

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Environment
 import android.support.annotation.IdRes
 import android.view.View
-import android.widget.Toast
 import com.ztn.app.R
 import com.ztn.app.base.BaseActivity
 import com.ztn.app.fragment.file.FileFragment

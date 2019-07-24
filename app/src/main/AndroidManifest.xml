@@ -41,6 +41,8 @@
 
         <activity android:name=".ui.view.DiagramActivity"/>
 
+        <activity android:name=".ui.view.DoodlingActivity"/>
+
         <provider
                 android:name="android.support.v4.content.FileProvider"
                 android:authorities="${applicationId}.FileProvider"

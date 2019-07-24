@@ -60,7 +60,7 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
                     helper.apply {
                         setText(R.id.name, item.name)
                         setText(R.id.content, item.show)
-
+                        getView<TextView>(R.id.name).isSelected = true
                         //建立监听
                         (getView(R.id.parent) as ConstraintLayout).setOnClickListener {
                             if (item.isFileDir) {

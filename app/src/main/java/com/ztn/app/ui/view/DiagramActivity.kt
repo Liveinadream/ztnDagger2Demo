@@ -2,12 +2,13 @@ package com.ztn.app.ui.view
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.view.MotionEvent
 import com.orhanobut.logger.Logger
 import com.ztn.app.R
 import com.ztn.app.base.SimpleActivity
 import com.ztn.common.ToastHelper
 import kotlinx.android.synthetic.main.activity_diagram.*
-import kotlinx.android.synthetic.main.base_activity_title.*
 import java.lang.IllegalStateException
 
 /**
@@ -22,6 +23,7 @@ class DiagramActivity : SimpleActivity() {
         }
     }
 
+    private var onDraw = false
 
     override fun getLayout(): Int {
         return R.layout.activity_diagram
@@ -63,7 +65,34 @@ class DiagramActivity : SimpleActivity() {
             } else {
                 ToastHelper.showToast("分数不合理")
             }
+            onDraw = false
         }
+
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.dir)
+        doodlingView.setBitmap(bitmap)
+        doodlingView.setOnTouchListener { v, event ->
+                        event?.apply {
+                            when (action) {
+                                MotionEvent.ACTION_DOWN -> {
+                                    doodlingView.startDrawLine(x, y)
+                                    return@setOnTouchListener true
+                                }
+                                MotionEvent.ACTION_MOVE -> {
+                                    doodlingView.drawPath(x, y)
+                                    return@setOnTouchListener true
+                                }
+                                else -> {
+                                    return@setOnTouchListener false
+                                }
+                            }
+            }
+
+            return@setOnTouchListener false
+        }
+
+//        doodlingView.setOnClickListener {
+//            doodlingView.onDraw = true
+//        }
     }
 
     override fun onPause() {
@@ -75,5 +104,4 @@ class DiagramActivity : SimpleActivity() {
         super.onRestart()
         diagramView.resume()
     }
-
 }
