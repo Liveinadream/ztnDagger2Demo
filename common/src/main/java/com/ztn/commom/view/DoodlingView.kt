@@ -1,5 +1,6 @@
 package com.ztn.commom.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -8,11 +9,12 @@ import android.graphics.Path
 import android.support.annotation.ColorRes
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import com.ztn.commom.R
 import com.ztn.common.utils.dip2px
 import com.ztn.common.utils.sp2px
-import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by 冒险者ztn on 2019-06-07.
@@ -20,31 +22,85 @@ import java.util.*
  */
 class DoodlingView : View {
 
-    private val mPairList = ArrayList<Any>() //查看下方 data class 即可
-    var lineStrokeWidth = 10f.dip2px
-    var textStrokeWidth = 1f.dip2px
+    companion object {
+        /**
+         * 绘制的三种状态
+         */
+        const val NOT_ON_DRAW = 0
+        const val DRAW_LINE = 1
+        const val DRAW_TEXT = 2
+    }
+
+    private var drawState = NOT_ON_DRAW
+
+    //查看下方 data class 即可
+    private lateinit var mPairList: ArrayList<Any>
+    //绘制线条宽度
+    private var lineStrokeWidth: Float = 0.0f
+    //绘制文字宽度
+    private var textStrokeWidth: Float = 0.0f
 
     @ColorRes
-    private var drawColor: Int = R.color.color_35FF0000
+    var drawColor: Int = 0
 
     private var bitmap: Bitmap? = null
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    private var doodlingPathNamListener: DoodlingPathNamListener? = null
+    private var doodlingStateListener: DoodlingOnActionDownStateListener? = null
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        initData()
+    }
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
+        initData()
+    }
+
+    private fun initData() {
+        lineStrokeWidth = 10f.dip2px
+        textStrokeWidth = 1f.dip2px
+        drawColor = R.color.color_35FF0000
+        mPairList = ArrayList()
+    }
+
+    fun addPathNumChangeListener(doodlingPathNamListener: DoodlingPathNamListener) {
+        this.doodlingPathNamListener = doodlingPathNamListener
+    }
+
+    fun addDrawStateChangeListener(doodlingStateListener: DoodlingOnActionDownStateListener) {
+        this.doodlingStateListener = doodlingStateListener
+    }
+
+    /**
+     * 设置绘制的状态
+     */
+    fun setDrawState(state: Int) {
+        if (this.drawState == state) {
+            this.drawState = NOT_ON_DRAW
+        } else {
+            this.drawState = state
+        }
+        doodlingStateListener?.stateOnActionDown(drawState)
+
+    }
+
+    /**
+     * 获取当前绘制的状态
+     */
+    fun getDrawState(): Int {
+        return drawState
+    }
 
     /**
      * 设置背景图片
      */
     fun setBitmap(bitmap: Bitmap) {
         this.bitmap = bitmap
-    }
-
-    /**
-     * 设置绘制颜色
-     */
-    fun setDrawColor(@ColorRes color: Int) {
-        drawColor = color
+        invalidate()
     }
 
     private fun getLastData(): Any? {
@@ -62,18 +118,21 @@ class DoodlingView : View {
         if (mPairList.isNotEmpty()) {
             mPairList.remove(getLastData())
         }
+        doodlingPathNamListener?.pathNumChange(mPairList.size)
+        invalidate()
         return mPairList.size
     }
 
     /**
      * 新建一条 path
      */
-    fun startDrawLine(x: Float, y: Float) {
+    private fun startDrawLine(x: Float, y: Float) {
         val paint = Paint()
         paint.color = ContextCompat.getColor(context, drawColor)
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = lineStrokeWidth
         mPairList.add(DrawPaintData(Path(), paint))
+        doodlingPathNamListener?.pathNumChange(mPairList.size)
         (getLastData() as DrawPaintData).path.moveTo(x, y)
         invalidate()
     }
@@ -81,7 +140,7 @@ class DoodlingView : View {
     /**
      * 在新建的 path 上画图
      */
-    fun drawPath(x: Float, y: Float) {
+    private fun drawPath(x: Float, y: Float) {
         (getLastData() as DrawPaintData).path.lineTo(x, y)
         invalidate()
     }
@@ -89,15 +148,15 @@ class DoodlingView : View {
     /**
      * 在特定的坐标处画文字
      */
-    fun statDrawText(x: Float, y: Float) {
+    private fun startDrawText(x: Float, y: Float) {
         val paint = Paint()
         paint.color = ContextCompat.getColor(context, drawColor)
         paint.style = Paint.Style.FILL
         paint.strokeWidth = textStrokeWidth
         paint.textSize = 20f.sp2px
         paint.isAntiAlias = true
-
         mPairList.add(DrawTextData("", x, y, paint))
+        doodlingPathNamListener?.pathNumChange(mPairList.size)
     }
 
     fun drawText(text: String) {
@@ -114,20 +173,78 @@ class DoodlingView : View {
         }
 
         for (i in 0 until mPairList.size) {
-            if (mPairList[i] is DrawPaintData) {
+            val drawData = mPairList[i]
+            if (drawData is DrawPaintData) {
                 canvas?.drawPath(
-                    (mPairList[i] as DrawPaintData).path,
-                    (mPairList[i] as DrawPaintData).paint
+                    drawData.path,
+                    drawData.paint
                 )
-            } else if (mPairList[i] is DrawTextData) {
+            } else if (drawData is DrawTextData) {
                 canvas?.drawText(
-                    (mPairList[i] as DrawTextData).text,
-                    (mPairList[i] as DrawTextData).x,
-                    (mPairList[i] as DrawTextData).y,
-                    (mPairList[i] as DrawTextData).paint
+                    drawData.text,
+                    drawData.x,
+                    drawData.y,
+                    drawData.paint
                 )
             }
         }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event?.apply {
+            when (action) {
+                MotionEvent.ACTION_DOWN -> {
+                    doodlingStateListener?.stateOnActionDown(drawState)
+
+                    return when (drawState) {
+                        DRAW_LINE -> {
+                            startDrawLine(x, y)
+                            true
+
+                        }
+                        DRAW_TEXT -> {
+                            startDrawText(x, y)
+                            true
+
+                        }
+                        else -> {
+                            false
+                        }
+                    }
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    return if (drawState == DRAW_LINE) {
+                        drawPath(x, y)
+                        true
+                    } else {
+                        false
+                    }
+                }
+                else -> {
+                    return false
+                }
+            }
+        }
+        return false
+    }
+
+    interface DoodlingPathNamListener {
+        fun pathNumChange(num: Int)
+    }
+
+    interface DoodlingOnActionDownStateListener {
+        fun stateOnActionDown(state: Int)
+    }
+
+    fun destroy() {
+        //重置所有属性
+        drawColor = R.color.color_35FF0000
+        lineStrokeWidth = 10f.dip2px
+        textStrokeWidth = 1f.dip2px
+
+        //清空
+        mPairList.clear()
     }
 
 }
@@ -141,4 +258,5 @@ data class DrawPaintData(val path: Path, val paint: Paint)
  * 绘制的文字的数据
  */
 data class DrawTextData(var text: String, val x: Float, val y: Float, val paint: Paint)
+
 

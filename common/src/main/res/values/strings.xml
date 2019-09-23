@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">commom</string>
+
+    <!--涂鸦图片无障碍点击语音-->
+    <string name="revoke_doodling">撤销上次涂鸦</string>
+    <string name="draw_text">绘制文字</string>
+    <string name="draw_line">绘制线条</string>
+    <string name="close_doodling">关闭涂鸦界面</string>
+    <string name="save_doodling">保存涂鸦</string>
+
 </resources>

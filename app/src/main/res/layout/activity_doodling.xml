@@ -31,22 +31,77 @@
             android:layout_height="wrap_content"
             android:visibility="invisible"/>
 
+    <RelativeLayout
+            android:id="@+id/edit_doodling_layout"
+            android:layout_width="match_parent"
+            app:layout_constraintStart_toStartOf="@id/parent"
+            app:layout_constraintEnd_toEndOf="@id/parent"
+            app:layout_constraintTop_toBottomOf="@id/diagramTitle"
+            android:layout_height="0dp">
 
-    <Button
-            android:id="@+id/drawText"
-            app:layout_constraintTop_toBottomOf="@id/editText"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="wrap_content"
+        <ImageView
+                android:id="@+id/saveDoodling"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="14dp"
+                android:background="@color/transparent_33000000"
+                android:scaleType="fitXY"
+                android:contentDescription="@string/save_doodling"
+                android:src="@drawable/doodling_back"
+                android:visibility="gone"/>
+
+        <ImageView
+                android:id="@+id/closeDoodling"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginStart="4dp"
+                android:background="@color/transparent_33000000"
+                android:scaleType="fitXY"
+                android:contentDescription="@string/close_doodling"
+                android:src="@drawable/doodling_close"/>
+
+        <ImageView
+                android:id="@+id/drawLine"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/draw_line"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:background="@drawable/doodling_img_bg"
+                android:scaleType="fitXY"
+                android:src="@drawable/doodling_line"/>
+
+        <ImageView
+                android:id="@+id/drawText"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:layout_toStartOf="@+id/drawLine"
+                android:background="@drawable/doodling_img_bg"
+                android:scaleType="fitXY"
+                android:src="@drawable/doodling_text"
+                android:contentDescription="@string/draw_text"/>
+
+        <ImageView
+                android:id="@+id/revokeDoodling"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:layout_toStartOf="@id/drawText"
+                android:background="@drawable/doodling_img_bg"
+                android:src="@drawable/doodling_revoke"
+                android:visibility="gone"
+                android:contentDescription="@string/revoke_doodling"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/colorRv"
+            android:paddingTop="@dimen/dp_40"
+            android:layout_width="@dimen/dp_80"
             android:layout_height="wrap_content"
-            android:text="绘制文字"/>
-
-    <Button
-            android:id="@+id/drawLine"
-            app:layout_constraintTop_toBottomOf="@id/editText"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="绘制线条"/>
-
+            app:layout_constraintEnd_toEndOf="@id/parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_doodling_layout"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -96,7 +96,7 @@ class DiagramViewWithSurface : SurfaceView, Runnable {
     }
 
     /**
-     * 动画/m
+     * 动画
      */
     private fun initAnimator() {
         animator.setFloatValues(0f, mWaveWidth)

@@ -68,31 +68,6 @@ class DiagramActivity : SimpleActivity() {
             onDraw = false
         }
 
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.dir)
-        doodlingView.setBitmap(bitmap)
-        doodlingView.setOnTouchListener { v, event ->
-                        event?.apply {
-                            when (action) {
-                                MotionEvent.ACTION_DOWN -> {
-                                    doodlingView.startDrawLine(x, y)
-                                    return@setOnTouchListener true
-                                }
-                                MotionEvent.ACTION_MOVE -> {
-                                    doodlingView.drawPath(x, y)
-                                    return@setOnTouchListener true
-                                }
-                                else -> {
-                                    return@setOnTouchListener false
-                                }
-                            }
-            }
-
-            return@setOnTouchListener false
-        }
-
-//        doodlingView.setOnClickListener {
-//            doodlingView.onDraw = true
-//        }
     }
 
     override fun onPause() {

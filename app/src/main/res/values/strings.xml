@@ -26,4 +26,7 @@
     <string name="self_view">自定义view</string>
     <string name="chat">聊天界面</string>
     <string name="send_message">发送消息</string>
+
+
+
 </resources>
