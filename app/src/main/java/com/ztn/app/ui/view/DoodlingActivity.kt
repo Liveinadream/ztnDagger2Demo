@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.GradientDrawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.view.KeyEvent
 import android.view.inputmethod.InputMethodManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -20,14 +19,14 @@ import com.ztn.common.utils.gone
 import com.ztn.common.utils.invisible
 import com.ztn.common.utils.visible
 import kotlinx.android.synthetic.main.activity_doodling.*
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by 冒险者ztn on 2019-06-07.
  */
 class DoodlingActivity : SimpleActivity() {
 
-    lateinit var imm: InputMethodManager;
+    lateinit var imm: InputMethodManager
 
     companion object {
         fun startWithNothing(context: Context) {
