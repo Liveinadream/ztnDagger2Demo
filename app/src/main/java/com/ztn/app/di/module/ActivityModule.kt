@@ -9,7 +9,7 @@ import dagger.Provides
 /**
  * Created by 冒险者ztn on 2019/2/12.
  *
- * module 提供你的对象，也就是你用到的对象，初始化你要的 present 的时候，或者全局用到的对象
+ * module 提供你的对象，也就是你用到的对象，初始化你要的 presenter 的时候，或者全局用到的对象
  * 提供 BaseActivity 的 module
  * 注入Activity，同时规定 Activity 所对应的域是 [ActivityScope]
  */

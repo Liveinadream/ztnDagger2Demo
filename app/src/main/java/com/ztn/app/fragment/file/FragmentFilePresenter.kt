@@ -57,8 +57,6 @@ class FragmentFilePresenter @Inject constructor() : BasePresenter<FragmentFileCo
                     val files = ArrayList<FileBean>()
                     val dirs = ArrayList<FileBean>()
 
-
-
                     fileDir.listFiles().forEach {
                         if (it.isDirectory) {
                             dirs.add(FileBean(it.name, true, it.path, show = "${it.listFiles().size} 项"))

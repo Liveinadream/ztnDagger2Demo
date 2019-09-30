@@ -45,6 +45,7 @@
         <activity
                 android:name=".ui.view.DoodlingActivity"
                 android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".ui.UserInfoActivity" />
 
         <provider
                 android:name="android.support.v4.content.FileProvider"

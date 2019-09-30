@@ -18,7 +18,6 @@ abstract class BaseFragment<T : BasePresenter<out BaseView>> : SimpleFragment() 
         return DaggerFragmentComponent
             .builder()
             .appComponent(BaseApplication.instance.appComponent)
-            .fragmentModule(fragmentModule)
             .build()
     }
 

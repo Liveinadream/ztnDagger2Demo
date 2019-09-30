@@ -18,6 +18,12 @@ android {
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner rootProject.ext.android.testInstrumentationRunner
     }
+
+    //MVVM 首先添加
+    dataBinding {
+        enabled = true
+    }
+
     packagingOptions {
         exclude 'META-INF/common_release.kotlin_module'
     }

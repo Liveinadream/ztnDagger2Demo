@@ -7,7 +7,6 @@ import com.ztn.app.base.contract.LoginContract
 import com.ztn.app.presenter.LoginPresenter
 import com.ztn.app.R
 import com.ztn.common.customs.CustomProgressDialog
-import com.ztn.common.utils.show
 import com.ztn.common.utils.wayutils.DialogUtils
 import kotlinx.android.synthetic.main.activity_login.*
 

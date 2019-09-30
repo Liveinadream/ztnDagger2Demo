@@ -1,7 +1,5 @@
 package com.ztn.app.base
 
-import android.widget.TextView
-import com.ztn.app.R
 import com.ztn.app.di.component.ActivityComponent
 import com.ztn.app.di.component.DaggerActivityComponent
 import com.ztn.app.di.module.ActivityModule
@@ -22,7 +20,6 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>> : SimpleActivity(),
         return DaggerActivityComponent
             .builder()
             .appComponent(BaseApplication.instance.appComponent)
-            .activityModule(activityModule)
             .build()
     }
 

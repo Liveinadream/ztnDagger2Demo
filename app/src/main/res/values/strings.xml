@@ -27,6 +27,7 @@
     <string name="chat">聊天界面</string>
     <string name="send_message">发送消息</string>
 
-
+    <!-- 用户信息界面 -->
+    <string name="avatar">头像</string>
 
 </resources>

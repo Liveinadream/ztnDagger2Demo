@@ -39,7 +39,7 @@ class DiagramViewWithSurface : SurfaceView, Runnable {
     private var mWaveWidth = 500f           //波的宽度
     private var mWaveHeight = 100f          //波的高度
     private var mWaveCount = 0              //波的数量
-    private var wavesNum = 3               //几条波
+    private var wavesNum = 3                //几条波
     private lateinit var background: Bitmap
     private var flag = true
 
