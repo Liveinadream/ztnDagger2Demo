@@ -1,86 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-<!--    <data>-->
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/tools"
+        xmlns:binding="http://schemas.android.com/tools">
 
-<!--        <variable-->
-<!--                name="userInfoViewModel"-->
-<!--                type="com.ztn.app.user.UserInfoViewMode" />-->
-<!--    </data>-->
+    <data>
 
-    <android.support.constraint.ConstraintLayout
+        <variable
+                name="viewModel"
+                type="com.ztn.app.ui.user.UserInfoViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+
+        <include
+                android:id="@+id/activityTitleLayout"
+                layout="@layout/base_activity_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:baseTitle="@{viewModel.title}" />
 
         <ImageView
                 android:id="@+id/avatar"
                 android:layout_width="@dimen/dp_40"
                 android:layout_height="@dimen/dp_40"
-                android:layout_margin="@dimen/margin_10"
-                android:contentDescription="@string/avatar"
+                android:layout_margin="@dimen/dp_4"
+                android:src="@drawable/dir"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/activityTitleLayout" />
 
         <TextView
                 android:id="@+id/name_title"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:padding="@dimen/margin_5"
-                android:text="@string/short_default_string"
-                android:textColor="@color/black_000"
-                android:textSize="@dimen/sp_13"
+                android:layout_margin="@dimen/dp_4"
+                android:text="@string/name"
                 app:layout_constraintEnd_toStartOf="@id/name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/avatar" />
+                app:layout_constraintTop_toBottomOf="@id/avatar" />
 
         <EditText
                 android:id="@+id/name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="@string/default_string"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:padding="@dimen/margin_5"
-                android:text="@string/default_string"
-                android:textSize="@dimen/sp_13"
+                android:layout_margin="@dimen/dp_4"
+                android:background="@drawable/edittext_bg"
+                android:maxLength="10"
+                android:singleLine="true"
+                android:text="@={viewModel.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/name_title"
                 app:layout_constraintTop_toBottomOf="@id/avatar" />
 
-
-        <TextView
-                android:id="@+id/age_title"
-                android:layout_width="0dp"
+        <Button
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:padding="@dimen/margin_5"
-                android:text="@string/short_default_string"
-                android:textColor="@color/black_000"
-                android:textSize="@dimen/sp_13"
-                app:layout_constraintEnd_toStartOf="@id/name"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name_title" />
-
-        <EditText
-                android:id="@+id/age"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="@string/default_string"
-                android:importantForAutofill="no"
-                android:inputType="number"
-                android:maxLength="3"
-                android:padding="@dimen/margin_5"
-                android:textSize="@dimen/sp_13"
+                android:layout_margin="@dimen/dp_4"
+                android:text="@string/save"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/name_title"
-                app:layout_constraintTop_toBottomOf="@id/name" />
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name"
+                binding:onClickCommand="@{viewModel.saveCommand}" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>
+

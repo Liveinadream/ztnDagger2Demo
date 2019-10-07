@@ -23,6 +23,8 @@ import com.yhao.floatwindow.ViewStateListener
 import com.ztn.app.R
 import com.ztn.app.ui.chat.FriendActivity
 import com.ztn.app.ui.file.FileActivity
+import com.ztn.app.ui.login.LoginActivity
+import com.ztn.app.ui.user.UserInfoActivity
 import com.ztn.app.ui.view.DiagramActivity
 import com.ztn.commom.utils.FaceUtils
 import com.ztn.commom.view.DiagramViewWithSurface
@@ -180,7 +182,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.next -> {
-                LoginActivity.startWithNothing(this)
+//                LoginActivity.startWithNothing(this)
             }
             R.id.another -> {
 
@@ -209,10 +211,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.selfView -> {
 //                DoodlingActivity.startWithNothing(this)
-                DiagramActivity.startWithNothing(this)
+//                DiagramActivity.startWithNothing(this)
+                com.ztn.app.ui.login.LoginActivity.startWithNoThing(this)
+
             }
             R.id.friend -> {
-                FriendActivity.startWithNothing(this)
+//                FriendActivity.startWithNothing(this)
+                UserInfoActivity.startWithNothing(this)
             }
         }
 
