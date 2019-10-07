@@ -68,4 +68,6 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["annotation-dagger-compiler"]
     compileOnly rootProject.ext.dependencies["jsr250-api"]
 
+    api rootProject.ext.dependencies["MVVMHabit"]
+
 }

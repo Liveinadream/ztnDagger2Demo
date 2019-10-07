@@ -1,12 +1,8 @@
 package com.ztn.app.base
 
-import android.app.Application
-import com.orhanobut.logger.Logger
 import com.ztn.app.di.component.AppComponent
-import com.ztn.app.di.component.DaggerActivityComponent
 import com.ztn.app.di.component.DaggerAppComponent
 import com.ztn.app.di.module.ApplicationModule
-import com.ztn.app.di.module.HttpModule
 import com.ztn.app.util.LogUtils
 import com.ztn.common.framework.AppManager
 import com.ztn.common.framework.CrashHandler
@@ -16,7 +12,7 @@ import javax.inject.Inject
  * Created by 冒险者ztn on 2019/2/12.
  * 基本的 application
  */
-class BaseApplication : Application() {
+class BaseApplication : me.goldze.mvvmhabit.base.BaseApplication() {
     var appComponent: AppComponent? = null
 
     @Inject
@@ -38,6 +34,7 @@ class BaseApplication : Application() {
             .build()
 
         LogUtils.init()
+
     }
 
     companion object {

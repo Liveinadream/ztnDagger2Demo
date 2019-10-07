@@ -16,4 +16,4 @@
 4.加入两个简单的自定义 view，一个是仪表盘，一个是波浪线。波浪线使用自定义 view 和 surfaceView 两种方式制作，可以在项目中自行替换，主要使用了 path ，
 绘制贝塞尔曲线，ValueAnimator 实现对应的参数变化。
 
-5.加入一个使用 socketIo 实现的简单的 IM 沟通，webSocket 方式暂未实现。 
+5.加入一个使用 socketIo 实现的简单的 IM 沟通，webSocket 方式暂未实现。
