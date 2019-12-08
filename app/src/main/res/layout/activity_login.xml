@@ -36,7 +36,8 @@
                 android:hint="@{viewModel.userNameHint}"
                 android:padding="@dimen/dp_4"
                 android:singleLine="true"
-                android:text="@={viewModel.userName}" />
+                android:text="@={viewModel.userName ,default = dasad}"
+                android:visibility="@{viewModel.show ? 0:1}" />
 
         <EditText
                 android:layout_width="match_parent"

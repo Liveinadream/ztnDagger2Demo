@@ -6,6 +6,7 @@ import com.ztn.app.di.module.ApplicationModule
 import com.ztn.app.util.LogUtils
 import com.ztn.common.framework.AppManager
 import com.ztn.common.framework.CrashHandler
+import net.sf.jmimemagic.Magic
 import javax.inject.Inject
 
 /**
@@ -34,6 +35,9 @@ class BaseApplication : me.goldze.mvvmhabit.base.BaseApplication() {
             .build()
 
         LogUtils.init()
+        Thread {
+            Magic.initialize()
+        }.start()
 
     }
 

@@ -4,12 +4,15 @@ import android.app.Application;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 
 import com.ztn.app.data.DemoRepository;
 import com.ztn.common.ToastHelper;
 
 import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
+import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
@@ -22,6 +25,7 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
 
     //用户名的绑定
     public ObservableField<String> userName = new ObservableField<>("");
+    public boolean show = false;
     public String userNameHint = "用户名";
 
     //密码的绑定
@@ -33,6 +37,9 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
         super(application, demoRepository);
         userName.set(model.getUserName());
         password.set(model.getPassword());
+        TextView textView = new TextView(getApplication());
+        textView.setOnClickListener(v -> {
+        });
     }
 
     //登录按钮的点击事件

@@ -4,6 +4,8 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.ztn.app.BR;
 import com.ztn.app.R;
@@ -18,6 +20,7 @@ import me.goldze.mvvmhabit.base.BaseActivity;
  * mvvm 登陆界面
  */
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
+    private TextView text;
 
     public static void startWithNoThing(Context context) {
         context.startActivity(new Intent(context, LoginActivity.class));
@@ -26,6 +29,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     //ActivityLoginBinding类是databinding框架自定生成的,对activity_login.xml
     @Override
     public int initContentView(Bundle savedInstanceState) {
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return R.layout.activity_login;
     }
 
