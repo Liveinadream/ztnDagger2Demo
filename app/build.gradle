@@ -52,6 +52,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':network')
+    implementation project(':lib')
     implementation rootProject.ext.dependencies["kotlin"]
     testImplementation rootProject.ext.dependencies["junit"]
     //support 暂时不做处理，未来会使用 Androidx 来代替 support 库
@@ -65,9 +66,4 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["annotation-dagger-compiler"]
     compileOnly rootProject.ext.dependencies["jsr250-api"]
     api rootProject.ext.dependencies["MVVMHabit"]
-    implementation files('libs/commons-logging-1.0.4.jar')
-    implementation files('libs/xerces-2.9.0.jar')
-    api 'oro:oro:2.0.8'
-    implementation files('libs/jmimemagic-0.1.5.jar')
-    implementation files('libs/log4j-1.2.8.jar')
 }

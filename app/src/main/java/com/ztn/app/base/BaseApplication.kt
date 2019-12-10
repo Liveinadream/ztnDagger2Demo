@@ -43,7 +43,6 @@ class BaseApplication : me.goldze.mvvmhabit.base.BaseApplication() {
 
     companion object {
         lateinit var instance: BaseApplication
-
     }
 
 
