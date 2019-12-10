@@ -82,7 +82,7 @@ class FragmentFilePresenter @Inject constructor() : BasePresenter<FragmentFileCo
 
             if (TextUtils.isEmpty(mime)) {
                 mime = try {
-                    Magic.getMagicMatch(file, true).mimeType
+                    Magic.getMagicMatch(file, false).mimeType
                 } catch (e: Exception) {
                     e.message?.apply {
                         log("错误:$this")
