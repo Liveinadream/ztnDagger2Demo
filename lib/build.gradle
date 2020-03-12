@@ -2,7 +2,6 @@ apply plugin: 'java-library'
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation files('libs/xerces-2.9.0.jar')
 }
 
 sourceCompatibility = "7"

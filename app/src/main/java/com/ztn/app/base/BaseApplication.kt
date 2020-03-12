@@ -1,12 +1,12 @@
 package com.ztn.app.base
 
+import com.j256.simplemagic.ContentInfoUtilSingle
 import com.ztn.app.di.component.AppComponent
 import com.ztn.app.di.component.DaggerAppComponent
 import com.ztn.app.di.module.ApplicationModule
 import com.ztn.app.util.LogUtils
 import com.ztn.common.framework.AppManager
 import com.ztn.common.framework.CrashHandler
-import net.sf.jmimemagic.Magic
 import javax.inject.Inject
 
 /**
@@ -35,10 +35,10 @@ class BaseApplication : me.goldze.mvvmhabit.base.BaseApplication() {
             .build()
 
         LogUtils.init()
-        Thread {
-            Magic.initialize()
-        }.start()
 
+        Thread {
+            ContentInfoUtilSingle.getInstance()
+        }.start()
     }
 
     companion object {

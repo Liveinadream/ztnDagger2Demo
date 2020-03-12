@@ -7,6 +7,8 @@ import android.support.v4.content.FileProvider
 import android.text.TextUtils
 import android.util.Log
 import android.webkit.MimeTypeMap
+import com.j256.simplemagic.ContentInfoUtil
+import com.j256.simplemagic.ContentInfoUtilSingle
 import com.ztn.app.base.BasePresenter
 import com.ztn.common.framework.AppManager
 import com.ztn.common.utils.log
@@ -16,7 +18,6 @@ import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import net.sf.jmimemagic.Magic
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileInputStream
@@ -34,75 +35,92 @@ class FragmentFilePresenter @Inject constructor() : BasePresenter<FragmentFileCo
 
 
     override fun openFile(file: File) {
+        //判断系统是否是7.0，文件识别功能，暂时注释掉了，
+//        val localUrl = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+//            Uri.fromFile(file)
+//        } else {
+//            FileProvider.getUriForFile(
+//                AppManager.context,
+//                "${AppManager.context.packageName}.FileProvider",
+//                file
+//            )
+//        }
+//        val mime = AppManager.context.contentResolver.getType(localUrl)
+//        Thread {
+//            var mime: String? = null
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                mime = Files.probeContentType(file.toPath())
+//            }
+//
+//            if (TextUtils.isEmpty(mime)) {
+//                mime = URLConnection.guessContentTypeFromName(file.absolutePath)
+//            }
+//
+//            if (TextUtils.isEmpty(mime)) {
+//                mime = URLConnection.guessContentTypeFromName(file.name)
+//            }
+//
+//            if (mime == null) {
+//                val url = file.path
+//                val extension = MimeTypeMap.getFileExtensionFromUrl(url)
+//                if (extension != null) {
+//                    mime =
+//                        MimeTypeMap.getSingleton().getMimeTypeFromExtension(
+//                            extension.toLowerCase(
+//                                Locale.getDefault()
+//                            )
+//                        )
+//                }
+//            }
+//
+//            if (TextUtils.isEmpty(mime)) {
+//                mime = URLConnection.guessContentTypeFromStream(
+//                    BufferedInputStream(
+//                        FileInputStream(file)
+//                    )
+//                )
+//            }
+//
+////            if (TextUtils.isEmpty(mime)) {
+////                mime = try {
+////                    Magic.getMagicMatch(file, true).mimeType
+////                } catch (e: Exception) {
+////                    e.message?.apply {
+////                        log("错误:$this")
+////                    }
+////                    ""
+////                }
+////            }
+//
+//            if (TextUtils.isEmpty(mime)) {
+//                val util = ContentInfoUtilSingle.getInstance()
+//                if (file != null && file.length > 0)
+//                    mime = util.findMatch(file).mimeType
+//            }
+//
+//            if (TextUtils.isEmpty(mime) || TextUtils.equals("???", mime)) {
+//                mime = AppManager.context.contentResolver.getType(localUrl)
+//            }
+//
+//            log("识别的文件类型：$mime")
+//
+//            val intent = Intent(Intent.ACTION_VIEW)
+//            intent.setDataAndType(localUrl, mime)
+//            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//            mRootView?.get()?.openInActivity(intent)
+//        }.start()
         //判断系统是否是7.0
         val localUrl = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             Uri.fromFile(file)
         } else {
-            FileProvider.getUriForFile(
-                AppManager.context,
-                "${AppManager.context.packageName}.FileProvider",
-                file
-            )
+            FileProvider.getUriForFile(AppManager.context, "${AppManager.context.packageName}.FileProvider", file)
         }
-//        val mime = AppManager.context.contentResolver.getType(localUrl)
-        Thread {
-            var mime: String? = null
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                mime = Files.probeContentType(file.toPath())
-            }
+        val mime = AppManager.context.contentResolver.getType(localUrl)
 
-            if (TextUtils.isEmpty(mime)) {
-                mime = URLConnection.guessContentTypeFromName(file.absolutePath)
-            }
-
-            if (TextUtils.isEmpty(mime)) {
-                mime = URLConnection.guessContentTypeFromName(file.name)
-            }
-
-            if (mime == null) {
-                val url = file.path
-                val extension = MimeTypeMap.getFileExtensionFromUrl(url)
-                if (extension != null) {
-                    mime =
-                        MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-                            extension.toLowerCase(
-                                Locale.getDefault()
-                            )
-                        )
-                }
-            }
-
-            if (TextUtils.isEmpty(mime)) {
-                mime = URLConnection.guessContentTypeFromStream(
-                    BufferedInputStream(
-                        FileInputStream(file)
-                    )
-                )
-            }
-
-            if (TextUtils.isEmpty(mime)) {
-                mime = try {
-                    Magic.getMagicMatch(file, false).mimeType
-                } catch (e: Exception) {
-                    e.message?.apply {
-                        log("错误:$this")
-                    }
-                    ""
-                }
-            }
-
-            if (TextUtils.isEmpty(mime) || TextUtils.equals("???", mime)) {
-                mime = AppManager.context.contentResolver.getType(localUrl)
-            }
-
-            log("识别的文件类型：$mime")
-
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.setDataAndType(localUrl, mime)
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            mRootView?.get()?.openInActivity(intent)
-        }.start()
-
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(localUrl, mime)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        mRootView?.get()?.openInActivity(intent)
 
     }
 
