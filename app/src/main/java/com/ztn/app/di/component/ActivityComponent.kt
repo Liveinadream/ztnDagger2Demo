@@ -6,7 +6,7 @@ import com.ztn.app.di.module.RxThreadModule
 import com.ztn.app.di.scope.ActivityScope
 import com.ztn.network.interfaces.ZhihuApis
 import com.ztn.app.rx.RxThread
-import com.ztn.app.ui.LoginActivity
+//import com.ztn.app.ui.LoginActivity
 import com.ztn.app.ui.chat.FriendActivity
 import com.ztn.app.ui.file.FileActivity
 import dagger.Component
@@ -26,7 +26,7 @@ import dagger.Component
 )
 interface ActivityComponent {
 
-    fun inject(loginActivity: LoginActivity)
+//    fun inject(loginActivity: LoginActivity)
 
     fun inject(fileActivity: FileActivity)
 

@@ -48,7 +48,7 @@ dependencies {
     //rx
     api rootProject.ext.dependencies["rxjava"]
     api rootProject.ext.dependencies["rxandroid"]
-    api rootProject.ext.dependencies["rxpermissions"]
+//    api rootProject.ext.dependencies["rxpermissions"]
 
     //network
     api rootProject.ext.dependencies["gson"]
@@ -72,4 +72,5 @@ dependencies {
     api rootProject.ext.dependencies["logger"]
 
     api rootProject.ext.dependencies["socket-io"]
+    api rootProject.ext.dependencies["FloatWindow"]
 }

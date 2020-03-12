@@ -29,5 +29,6 @@
 
     <!-- 用户信息界面 -->
     <string name="avatar">头像</string>
+    <string name="save">保存</string>
 
 </resources>

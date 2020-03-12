@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.opengl.GLSurfaceView
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
@@ -15,19 +16,30 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.tbruyelle.rxpermissions2.RxPermissions
+import com.yhao.floatwindow.FloatWindow
+import com.yhao.floatwindow.PermissionListener
+import com.yhao.floatwindow.Screen
+import com.yhao.floatwindow.ViewStateListener
 import com.ztn.app.R
 import com.ztn.app.ui.chat.FriendActivity
 import com.ztn.app.ui.file.FileActivity
-import com.ztn.app.ui.view.DoodlingActivity
+import com.ztn.app.ui.login.LoginActivity
+import com.ztn.app.ui.user.UserInfoActivity
+import com.ztn.app.ui.view.DiagramActivity
 import com.ztn.commom.utils.FaceUtils
+import com.ztn.commom.view.DiagramViewWithSurface
 import com.ztn.common.ToastHelper
 import com.ztn.common.framework.AppManager
 import com.ztn.common.utils.animation.viewClick
+import com.ztn.common.utils.show
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private lateinit var viewStateListener: ViewStateListener
+    private lateinit var permissionListener: PermissionListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +54,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this,
+            drawer_layout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
@@ -66,10 +82,72 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }, {}).dispose()
         }
-
         createFile.setOnClickListener {
             openFileOutput("test" + System.currentTimeMillis(), Context.MODE_PRIVATE)
         }
+
+        val diagramView = DiagramViewWithSurface(this)
+        Thread {
+            diagramView.run()
+        }.start()
+        viewStateListener = object : ViewStateListener {
+            override fun onBackToDesktop() {
+
+            }
+
+            override fun onMoveAnimStart() {
+                diagramView.pause()
+
+            }
+
+            override fun onMoveAnimEnd() {
+                diagramView.resume()
+
+            }
+
+            override fun onPositionUpdate(p0: Int, p1: Int) {
+            }
+
+            override fun onDismiss() {
+                ToastHelper.show("关闭了")
+            }
+
+            override fun onShow() {
+                diagramView.resume()
+            }
+
+            override fun onHide() {
+                diagramView.pause()
+            }
+        }
+
+        permissionListener = object : PermissionListener {
+
+            override fun onSuccess() {
+            }
+
+            override fun onFail() {
+            }
+        }
+
+//        if (FloatWindow.get() == null) {
+//            FloatWindow
+//                .with(applicationContext)
+//                .setView((GLSurfaceView(this)))
+//                .setWidth(100)                               //设置控件宽高
+//                .setHeight(Screen.width, 0.2f)
+//                .setX(100)                                   //设置控件初始位置
+//                .setMoveStyle(1000, null)
+//                .setY(Screen.height, 0.3f)
+//                .setDesktopShow(true)                        //桌面显示
+//                .setViewStateListener(viewStateListener)    //监听悬浮控件状态改变
+//                .setPermissionListener(permissionListener)  //监听权限申请结果
+//                .build()
+//
+//            createFile.postDelayed({
+//                FloatWindow.destroy()
+//            }, 20000)
+//        }
 
     }
 
@@ -104,14 +182,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.next -> {
-                LoginActivity.startWithNothing(this)
+//                LoginActivity.startWithNothing(this)
             }
             R.id.another -> {
 
                 if (checkPackInfo("com.ztn.recyclerviewdemo")) {
                     val intent = Intent(Intent.ACTION_MAIN)
                     val componentName =
-                        ComponentName("com.ztn.recyclerviewdemo", "com.ztn.recyclerviewdemo.MainActivity")
+                        ComponentName(
+                            "com.ztn.recyclerviewdemo",
+                            "com.ztn.recyclerviewdemo.MainActivity"
+                        )
                     intent.component = componentName
                     intent.putExtra("come", "来自张天宁的app")
                     startActivity(intent)
@@ -129,11 +210,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 FileActivity.startWithNothing(this)
             }
             R.id.selfView -> {
-                DoodlingActivity.startWithNothing(this)
-//                DiagramActivity.startWithNothing(this)
+//                DoodlingActivity.startWithNothing(this)
+                DiagramActivity.startWithNothing(this)
+//                com.ztn.app.ui.login.LoginActivity.startWithNoThing(this)
+
             }
             R.id.friend -> {
-                FriendActivity.startWithNothing(this)
+//                FriendActivity.startWithNothing(this)
+                UserInfoActivity.startWithNothing(this)
             }
         }
 

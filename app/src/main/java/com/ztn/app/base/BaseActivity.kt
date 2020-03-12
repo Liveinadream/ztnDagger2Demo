@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 /**
  * Created by 冒险者ztn on 2019/2/12.
- * 介绍 todo
+ * 实现 mvp 活动的基类
  */
 abstract class BaseActivity<T : BasePresenter<out BaseView>> : SimpleActivity(), BaseView {
 

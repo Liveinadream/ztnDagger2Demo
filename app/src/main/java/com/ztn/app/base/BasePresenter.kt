@@ -7,18 +7,18 @@ import java.lang.ref.WeakReference
 
 /**
  * Created by 冒险者ztn on 2019/2/12.
- * 介绍 todo
+ * Presenter
  */
 open class BasePresenter<T : BaseView> : IPresenter<T> {
 
-    var mRootView: Reference<T>? = null
+    var mRootView: Reference<T?>? = null
         private set
 
     var compositeDisposable = CompositeDisposable()
 
 
-    override fun  attachView(mRootView: T) {
-        this.mRootView = WeakReference<T>(mRootView)
+    override fun  attachView(mRootView: T?) {
+        this.mRootView = WeakReference(mRootView)
     }
 
     override fun detachView() {

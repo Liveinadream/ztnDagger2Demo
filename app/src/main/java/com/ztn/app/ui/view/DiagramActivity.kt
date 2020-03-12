@@ -2,14 +2,11 @@ package com.ztn.app.ui.view
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.view.MotionEvent
 import com.orhanobut.logger.Logger
 import com.ztn.app.R
 import com.ztn.app.base.SimpleActivity
 import com.ztn.common.ToastHelper
 import kotlinx.android.synthetic.main.activity_diagram.*
-import java.lang.IllegalStateException
 
 /**
  * Created by 冒险者ztn on 2019/3/14.

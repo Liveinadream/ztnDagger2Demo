@@ -2,7 +2,7 @@ package com.ztn.app.di.module
 
 import android.app.Activity
 import com.ztn.app.di.scope.ActivityScope
-import com.ztn.app.ui.LoginActivity
+//import com.ztn.app.ui.LoginActivity
 import dagger.Module
 import dagger.Provides
 
@@ -20,9 +20,9 @@ class ActivityModule(private var mActivity: Activity) {
     @ActivityScope
     fun provideActivity(): Activity = mActivity
 
-    @Provides
-    @ActivityScope
-    fun provideLoginActivity(): LoginActivity = mActivity as LoginActivity
+//    @Provides
+//    @ActivityScope
+//    fun provideLoginActivity(): LoginActivity = mActivity as LoginActivity
 
 
 }
