@@ -211,8 +211,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.selfView -> {
 //                DoodlingActivity.startWithNothing(this)
-//                DiagramActivity.startWithNothing(this)
-                com.ztn.app.ui.login.LoginActivity.startWithNoThing(this)
+                DiagramActivity.startWithNothing(this)
+//                com.ztn.app.ui.login.LoginActivity.startWithNoThing(this)
 
             }
             R.id.friend -> {
