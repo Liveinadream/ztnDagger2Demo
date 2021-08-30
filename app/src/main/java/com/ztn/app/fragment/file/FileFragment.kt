@@ -54,61 +54,63 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
         selectNum = 0
         data = list
         if (adapter == null) {
-            adapter = object : BaseQuickAdapter<FileBean, BaseViewHolder>(R.layout.item_flle, list) {
+            adapter =
+                object : BaseQuickAdapter<FileBean, BaseViewHolder>(R.layout.item_flle, list) {
 
-                override fun convert(helper: BaseViewHolder, item: FileBean) {
-                    helper.apply {
-                        setText(R.id.name, item.name)
-                        setText(R.id.content, item.show)
-                        getView<TextView>(R.id.name).isSelected = true
-                        //建立监听
-                        (getView(R.id.parent) as ConstraintLayout).setOnClickListener {
+                    override fun convert(helper: BaseViewHolder, item: FileBean) {
+                        helper.apply {
+                            setText(R.id.name, item.name)
+                            setText(R.id.content, item.show)
+                            getView<TextView>(R.id.name).isSelected = true
+                            //建立监听
+                            (getView(R.id.parent) as ConstraintLayout).setOnClickListener {
+                                if (item.isFileDir) {
+                                    fileActivity.clickItem(item.path)
+                                } else {
+                                    mPresenter.openFile(File(item.path))
+                                }
+                            }
+
+                            setOnCheckedChangeListener(R.id.selected) { _, isChecked ->
+                                item.selected = isChecked
+
+
+                                if (isChecked) {
+                                    selectNum++
+                                    fileActivity.getViewById(R.id.seeTheSelected).visible()
+                                } else {
+                                    selectNum--
+                                }
+
+                                if (selectNum == 0) {
+                                    fileActivity.getViewById(R.id.seeTheSelected).gone()
+                                }
+                            }
+
+                            //判断类型
                             if (item.isFileDir) {
-                                fileActivity.clickItem(item.path)
+                                setImageResource(R.id.headImg, R.drawable.dir)
                             } else {
-                                mPresenter.openFile(File(item.path))
+                                setImageResource(R.id.headImg, R.drawable.file)
                             }
-                        }
 
-                        setOnCheckedChangeListener(R.id.selected) { _, isChecked ->
-                            item.selected = isChecked
-
-
-                            if (isChecked) {
-                                selectNum++
-                                fileActivity.getViewById(R.id.seeTheSelected).visible()
+                            //判断是否选中
+                            if (item.selected) {
+                                setChecked(R.id.selected, true)
                             } else {
-                                selectNum--
-                            }
-
-                            if (selectNum == 0) {
-                                fileActivity.getViewById(R.id.seeTheSelected).gone()
+                                setChecked(R.id.selected, false)
                             }
                         }
 
-                        //判断类型
-                        if (item.isFileDir) {
-                            setImageResource(R.id.headImg, R.drawable.dir)
-                        } else {
-                            setImageResource(R.id.headImg, R.drawable.file)
-                        }
 
-                        //判断是否选中
-                        if (item.selected) {
-                            setChecked(R.id.selected, true)
-                        } else {
-                            setChecked(R.id.selected, false)
-                        }
                     }
-
 
                 }
 
-            }
-
             fileList.hasFixedSize()
             fileList.setItemViewCacheSize(20)
-            adapter?.emptyView = View.inflate(this.context, R.layout.no_data, LinearLayout(this.context))
+            adapter?.emptyView =
+                View.inflate(this.context, R.layout.no_data, LinearLayout(this.context))
             fileList.layoutManager = LinearLayoutManager(this.context)
             fileList.adapter = adapter
         } else {
@@ -124,7 +126,7 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            ToastHelper.showToast("没有能打开的界面")
+            ToastHelper.showToast("没有能打开的文件的应用")
         }
     }
 

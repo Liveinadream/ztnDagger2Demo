@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 /**
  * Created by 冒险者ztn on 2019/2/12.
- * 介绍 todo
  */
 //private val iVew: ICommonView
 open class LoginPresenter @Inject
@@ -19,13 +18,12 @@ constructor(private val api: ZhihuApis, private val rxThread: RxThread) :
 
     override fun login() {
 
-        mRootView?.get()?.loading()
-
+        requireRootView().loading()
         compositeDisposable.add(api.getWelcomeInfo("dadsa")
             .compose(rxThread.applyAsync())
-            .doOnTerminate { mRootView?.get()?.dismissLoading() }
+            .doOnTerminate { requireRootView().dismissLoading() }
             .subscribe({
-                mRootView?.get()?.loginSuccess()
+                requireRootView().loginSuccess()
             }, {})
         )
 

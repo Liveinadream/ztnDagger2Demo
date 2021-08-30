@@ -1,6 +1,7 @@
 package com.ztn.app.ui
 
 import android.Manifest
+import android.app.ApplicationErrorReport
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -52,7 +53,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-
         val toggle = ActionBarDrawerToggle(
             this,
             drawer_layout,

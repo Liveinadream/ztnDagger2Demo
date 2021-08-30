@@ -1,0 +1,49 @@
+ext.isIgnoreLintWarnings = {
+    if (project.hasProperty('lint_ignore_warnings')) {
+        return true
+    }
+    return false
+}
+
+android {
+    compileSdkVersion versions.compileSdkVersion
+    buildToolsVersion versions.buildToolsVersion
+
+    defaultConfig {
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    lintOptions {
+        textReport true
+        textOutput 'stdout'
+
+        abortOnError true
+        ignoreWarnings isIgnoreLintWarnings()
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    pluginManager.withPlugin('kotlin-android') {
+        kotlinOptions {
+            jvmTarget = "11"
+        }
+    }
+
+    testOptions {
+        unitTests.all {
+            // All the usual Gradle options.
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen {false}
+                showStandardStreams = true
+            }
+        }
+
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+}

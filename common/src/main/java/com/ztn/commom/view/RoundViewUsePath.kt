@@ -106,7 +106,7 @@ class RoundViewUsePath : View {
             )
         }
 
-        arcPath.addArc(arc, 150f, 240f)
+        arcPath.addArc(arc!!, 150f, 240f)
         canvas.drawPath(arcPath, arcPaint)
 
         //保存基础圆形
@@ -116,7 +116,7 @@ class RoundViewUsePath : View {
     //画分数弧
     private fun drawScore(canvas: Canvas) {
         arcScorePath.reset()
-        arcScorePath.addArc(arc, 150f - 5f, 240f / 100f * showScore - 5f)
+        arcScorePath.addArc(arc!!, 150f - 5f, 240f / 100f * showScore - 5f)
         canvas.drawPath(arcScorePath, arcScorePaint)
 
     }
@@ -135,7 +135,7 @@ class RoundViewUsePath : View {
     //画小圆点
     private fun drawSmallRound(canvas: Canvas) {
         smallRoundPath.reset()
-        smallRoundPath.addArc(arc, 150f + 240f / 100f * showScore, 0.1f)
+        smallRoundPath.addArc(arc!!, 150f + 240f / 100f * showScore, 0.1f)
         canvas.drawPath(smallRoundPath, arcScorePaint)
 
     }
