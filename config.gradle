@@ -1,6 +1,6 @@
 ext {
     versions = [
-            compileSdkVersion  : 30,
+            compileSdkVersion  : 33,
             buildToolsVersion  : "30.0.2",
             minSdkVersion      : 23,
             targetSdkVersion   : 30,
@@ -9,7 +9,7 @@ ext {
             junitVersion             : '4.12',
 
             // Kotlin
-            kotlin             : '1.5.20',
+            kotlin             : '1.8.0',
             kotlinCoroutine    : "1.4.2",
 
             // Android X
@@ -20,44 +20,36 @@ ext {
             lifecycle          : "2.3.0",
     ]
 
-    android = [
-            kotlin_version           : "1.3.20",
-            compileSdkVersion        : 28,
-            minSdkVersion            : 21,
-            targetSdkVersion         : 28,
-            buildToolsVersion        : "28.0.3",
-            supportLibraryVersion    : '28.0.0',
-   ]
+    android = [kotlin_version           : "1.3.20",
+               compileSdkVersion        : 28,
+               minSdkVersion            : 21,
+               targetSdkVersion         : 28,
+               buildToolsVersion        : "28.0.3",
+               supportLibraryVersion    : '28.0.0',
+    ]
     /**
      * 'android' is a special name in 'build.gradle', we should not use it as a variable name.
      * @deprecated
      */
-    android = [
-            testInstrumentationRunner: "androidx.test.runner.AndroidJUnitRunner"
+    android = [testInstrumentationRunner: "androidx.test.runner.AndroidJUnitRunner"
     ]
     android.putAll(versions)
 
 
-    def dependVersion = [
-            support : "28.0.0",
-            retrofit: "2.3.0",
-            okhttp  : "3.13.1",
-            dagger2 : "2.14.1",
-            jsr250  : "1.0",
+    def dependVersion =[support : "28.0.0",
+                        retrofit: "2.3.0",
+                        okhttp  : "3.13.1",
+                        dagger2 : "2.14.1",
+                        jsr250  : "1.0",
     ]
 
     dependencies = [
             // 使用的仓库   maven { url 'https://jitpack.io' }
 
             //common
-            "kotlin"                    : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${android.kotlin_version}",
+//            "kotlin"                    : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${android.kotlin_version}",
             "junit"                     : "junit:junit:4.12",
 
-            //base
-            "appcompat-v7"              : "com.android.support:appcompat-v7:${dependVersion.support}",
-            "cardview-v7"               : "com.android.support:cardview-v7:${dependVersion.support}",
-            "recyclerview-v7"           : "com.android.support:recyclerview-v7:${dependVersion.support}",
-            "design"                    : "com.android.support:design:${dependVersion.support}",
             "ranger"                    : "com.github.Liveinadream:Ranger:1.0.9",
 
             //rx
@@ -95,9 +87,9 @@ ext {
             "crashreport"               : "com.tencent.bugly:crashreport:latest.release",
             "eventbus"                  : "org.greenrobot:eventbus:3.0.0",
             "glide"                     : "com.github.bumptech.glide:glide:4.8.0",
-            "fragmentation"             : "me.yokeyword:fragmentation:1.3.6",
-            "swipeback"                 : "me.yokeyword:fragmentation-swipeback:1.3.6",
-            "recyclerview-adapter"      : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22',
+            "fragmentation"             : "io.github.aa86799:FragmentationXS:1.0.1",
+            "swipeback"                 : "io.github.aa86799:FragmentationXS-swipeback:1.0.1",
+            "recyclerview-adapter"      : 'io.github.cymchad:BaseRecyclerViewAdapterHelper:3.0.4',
             "FloatWindow"               : 'com.github.yhaolpz:FloatWindow:1.0.9'
     ]
 

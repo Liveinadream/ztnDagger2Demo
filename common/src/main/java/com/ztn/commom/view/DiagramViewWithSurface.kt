@@ -4,8 +4,8 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.opengl.GLSurfaceView
-import android.support.annotation.Nullable
-import android.support.v4.content.ContextCompat
+import androidx.annotation.Nullable
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.SurfaceView
 import android.view.WindowManager

@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import com.orhanobut.logger.Logger
 import com.ztn.app.R
 import com.ztn.app.base.BaseActivity
@@ -15,7 +18,7 @@ import com.ztn.network.GsonUtil
 import com.ztn.network.interceptor.UserAgentInterceptor
 import io.socket.client.IO
 import io.socket.client.Socket
-import kotlinx.android.synthetic.main.activity_friend.*
+//import kotlinx.android.synthetic.main.activity_friend.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
@@ -51,6 +54,10 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View {
     private var mWebSocket: WebSocket? = null
     private val msgObj = JSONObject()
 
+    private lateinit var serverReturn: TextView
+    private lateinit var sendMessage: Button
+    private lateinit var sendMessageText: Button
+
 
     override fun initInject() {
         getActivityComponent().inject(this)
@@ -78,8 +85,9 @@ class FriendActivity : BaseActivity<FriendPresenter>(), FriendContract.View {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated() {
         super.onViewCreated()
-
-
+        serverReturn = findViewById(R.id.serverReturn)
+        sendMessage = findViewById(R.id.sendMessage)
+        sendMessageText = findViewById(R.id.sendMessageText)
 //        webView.loadUrl("http://192.168.1.146:8080")
 //        initWebSocket()
         initSocketIo()

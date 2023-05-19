@@ -2,22 +2,22 @@
 apply from: "config.gradle"
 
 buildscript {
-    ext.kotlin_version = '1.5.20'
+    ext.kotlin_version = '1.8.0'
 
     ext {
         moduleCommon = "${rootDir}/module_common.gradle"
     }
     repositories {
         google()
-        jcenter()
+        maven { url 'https://jitpack.io' }
+        mavenCentral()
         maven {
             url 'https://maven.google.com/'
-            maven { url 'https://jitpack.io' }
             name 'Google'
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.1'
+        classpath 'com.android.tools.build:gradle:7.0.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -25,7 +25,6 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
         maven { url "https://jitpack.io" }
         mavenCentral()
         maven {

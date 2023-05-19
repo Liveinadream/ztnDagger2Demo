@@ -4,11 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.GradientDrawable
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.ztn.app.R
 import com.ztn.app.base.SimpleActivity
 import com.ztn.commom.view.DoodlingView
@@ -18,8 +21,6 @@ import com.ztn.commom.view.DoodlingView.Companion.NOT_ON_DRAW
 import com.ztn.common.utils.gone
 import com.ztn.common.utils.invisible
 import com.ztn.common.utils.visible
-import kotlinx.android.synthetic.main.activity_doodling.*
-import java.util.*
 
 /**
  * Created by 冒险者ztn on 2019-06-07.
@@ -35,6 +36,12 @@ class DoodlingActivity : SimpleActivity() {
     }
 
     private var adapter: BaseQuickAdapter<Int, BaseViewHolder>? = null
+    private lateinit var doodlingView: DoodlingView
+    private lateinit var drawLine: ImageView
+    private lateinit var drawText: ImageView
+    private lateinit var editText: EditText
+    private lateinit var revokeDoodling: ImageView
+    private lateinit var colorRv: RecyclerView
 
 
     override fun getLayout(): Int {
@@ -83,7 +90,7 @@ class DoodlingActivity : SimpleActivity() {
         }
 
         drawText.setOnClickListener {
-            doodlingView?.apply {
+            doodlingView.apply {
                 setDrawState(DRAW_TEXT)
                 if (getDrawState() == DRAW_TEXT) {
                     (drawText.background as GradientDrawable).setColor(
@@ -173,8 +180,8 @@ class DoodlingActivity : SimpleActivity() {
 
         adapter = object :
             BaseQuickAdapter<Int, BaseViewHolder>(R.layout.item_doodling_color, drawColors) {
-            override fun convert(helper: BaseViewHolder?, item: Int) {
-                helper?.apply {
+            override fun convert(holder: BaseViewHolder, item: Int) {
+                holder.apply {
                     setBackgroundColor(
                         R.id.colorView,
                         ContextCompat.getColor(this@DoodlingActivity, item)
@@ -185,62 +192,59 @@ class DoodlingActivity : SimpleActivity() {
         }
 
         //点击后设置绘制颜色
-        (adapter as BaseQuickAdapter<Int, BaseViewHolder>).onItemClickListener =
-            BaseQuickAdapter.OnItemClickListener { _, _, position ->
-                doodlingView.drawColor = drawColors[position]
-                when (doodlingView.getDrawState()) {
-                    NOT_ON_DRAW -> {
-                        (drawText.background as GradientDrawable).setColor(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.transparent_33000000
-                            )
+        (adapter as BaseQuickAdapter<Int, BaseViewHolder>).setOnItemClickListener { adapter, view, position ->
+            doodlingView.drawColor = drawColors[position]
+            when (doodlingView.getDrawState()) {
+                NOT_ON_DRAW -> {
+                    (drawText.background as GradientDrawable).setColor(
+                        ContextCompat.getColor(
+                            this@DoodlingActivity,
+                            R.color.transparent_33000000
                         )
-                        (drawLine.background as GradientDrawable).setColor(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.transparent_33000000
-                            )
+                    )
+                    (drawLine.background as GradientDrawable).setColor(
+                        ContextCompat.getColor(
+                            this@DoodlingActivity,
+                            R.color.transparent_33000000
                         )
-                    }
+                    )
+                }
 
-                    DRAW_LINE -> {
-                        (drawText.background as GradientDrawable).setColor(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.transparent_33000000
-                            )
+                DRAW_LINE -> {
+                    (drawText.background as GradientDrawable).setColor(
+                        ContextCompat.getColor(
+                            this@DoodlingActivity,
+                            R.color.transparent_33000000
                         )
-                        (drawLine.background as GradientDrawable).setColor(
-                            ContextCompat.getColor(
-                                this,
-                                doodlingView.drawColor
-                            )
+                    )
+                    (drawLine.background as GradientDrawable).setColor(
+                        ContextCompat.getColor(
+                            this@DoodlingActivity,
+                            doodlingView.drawColor
                         )
+                    )
+                }
 
-                    }
-
-                    DRAW_TEXT -> {
-                        (drawText.background as GradientDrawable).setColor(
-                            ContextCompat.getColor(
-                                this,
-                                doodlingView.drawColor
-                            )
+                DRAW_TEXT -> {
+                    (drawText.background as GradientDrawable).setColor(
+                        ContextCompat.getColor(
+                            this@DoodlingActivity,
+                            doodlingView.drawColor
                         )
-                        (drawLine.background as GradientDrawable).setColor(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.transparent_33000000
-                            )
+                    )
+                    (drawLine.background as GradientDrawable).setColor(
+                        ContextCompat.getColor(
+                            this@DoodlingActivity,
+                            R.color.transparent_33000000
                         )
-
-                    }
-
+                    )
 
                 }
             }
+        }
 
-        colorRv.layoutManager = LinearLayoutManager(this)
+        colorRv.layoutManager =
+            LinearLayoutManager(this)
         colorRv.adapter = adapter
     }
 

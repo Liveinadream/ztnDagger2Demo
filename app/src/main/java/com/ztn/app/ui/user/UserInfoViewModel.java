@@ -1,8 +1,8 @@
 package com.ztn.app.ui.user;
 
 import android.app.Application;
-import android.databinding.ObservableField;
-import android.support.annotation.NonNull;
+import androidx.databinding.ObservableField;
+import androidx.annotation.NonNull;
 
 import com.ztn.app.data.DemoRepository;
 

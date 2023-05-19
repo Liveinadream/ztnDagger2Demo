@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
         android:id="@+id/parent"
@@ -96,7 +96,7 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/colorRv"
             android:paddingTop="@dimen/dp_40"
             android:layout_width="@dimen/dp_80"
@@ -104,4 +104,4 @@
             app:layout_constraintEnd_toEndOf="@id/parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_doodling_layout"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

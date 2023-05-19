@@ -3,13 +3,15 @@ package com.ztn.app.fragment.file
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.LinearLayoutManager
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.ztn.app.R
 import com.ztn.app.base.BaseFragment
 import com.ztn.network.bean.FileBean
@@ -17,7 +19,6 @@ import com.ztn.app.ui.file.FileActivity
 import com.ztn.common.ToastHelper
 import com.ztn.common.utils.gone
 import com.ztn.common.utils.visible
-import kotlinx.android.synthetic.main.fragment_files.*
 import java.io.File
 
 /**
@@ -39,6 +40,7 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
     }
 
     private var adapter: BaseQuickAdapter<FileBean, BaseViewHolder>? = null
+    private lateinit var fileList: RecyclerView
     private lateinit var fileActivity: FileActivity
 
     //当前的路径
@@ -57,8 +59,8 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
             adapter =
                 object : BaseQuickAdapter<FileBean, BaseViewHolder>(R.layout.item_flle, list) {
 
-                    override fun convert(helper: BaseViewHolder, item: FileBean) {
-                        helper.apply {
+                    override fun convert(holder: BaseViewHolder, item: FileBean) {
+                        holder.apply {
                             setText(R.id.name, item.name)
                             setText(R.id.content, item.show)
                             getView<TextView>(R.id.name).isSelected = true
@@ -71,9 +73,8 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
                                 }
                             }
 
-                            setOnCheckedChangeListener(R.id.selected) { _, isChecked ->
+                            getView<AppCompatCheckBox>(R.id.selected).setOnCheckedChangeListener { _, isChecked ->
                                 item.selected = isChecked
-
 
                                 if (isChecked) {
                                     selectNum++
@@ -95,11 +96,7 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
                             }
 
                             //判断是否选中
-                            if (item.selected) {
-                                setChecked(R.id.selected, true)
-                            } else {
-                                setChecked(R.id.selected, false)
-                            }
+                            getView<AppCompatCheckBox>(R.id.selected).isChecked = item.selected
                         }
 
 
@@ -109,12 +106,12 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
 
             fileList.hasFixedSize()
             fileList.setItemViewCacheSize(20)
-            adapter?.emptyView =
-                View.inflate(this.context, R.layout.no_data, LinearLayout(this.context))
-            fileList.layoutManager = LinearLayoutManager(this.context)
+            adapter?.setEmptyView(View.inflate(context, R.layout.no_data, LinearLayout(context)))
+            fileList.layoutManager =
+                LinearLayoutManager(context)
             fileList.adapter = adapter
         } else {
-            adapter?.setNewData(list)
+            adapter?.setNewInstance(list)
         }
     }
 
@@ -144,11 +141,9 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
         getFragmentComponent().inject(this)
     }
 
+
     fun getPath(): String {
         return usePath
-    }
-
-    override fun initView() {
     }
 
     override fun lazyLoad() {
@@ -157,6 +152,7 @@ class FileFragment : BaseFragment<FragmentFilePresenter>(), FragmentFileContract
         mPresenter.attachView(this)
         usePath = arguments?.getString(PATH)!!
         mPresenter.clickItem(usePath)
+        fileList = fileActivity.findViewById(R.id.fileList)
     }
 
 

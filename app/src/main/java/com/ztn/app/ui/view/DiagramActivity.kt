@@ -2,11 +2,14 @@ package com.ztn.app.ui.view
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Button
+import android.widget.EditText
 import com.orhanobut.logger.Logger
 import com.ztn.app.R
 import com.ztn.app.base.SimpleActivity
+import com.ztn.commom.view.DiagramViewWithSurface
+import com.ztn.commom.view.RoundViewUsePath
 import com.ztn.common.ToastHelper
-import kotlinx.android.synthetic.main.activity_diagram.*
 
 /**
  * Created by 冒险者ztn on 2019/3/14.
@@ -20,6 +23,12 @@ class DiagramActivity : SimpleActivity() {
         }
     }
 
+    private lateinit var diagramView: DiagramViewWithSurface
+    private lateinit var roundView: RoundViewUsePath
+    private lateinit var sure: Button
+    private lateinit var waveNum: EditText
+    private lateinit var score: EditText
+
     private var onDraw = false
 
     override fun getLayout(): Int {
@@ -31,6 +40,13 @@ class DiagramActivity : SimpleActivity() {
 
     override fun onViewCreated() {
         super.onViewCreated()
+
+        diagramView = findViewById(R.id.diagramView)
+        roundView = findViewById(R.id.roundView)
+        sure = findViewById(R.id.sure)
+        waveNum = findViewById(R.id.waveNum)
+        score = findViewById(R.id.score)
+
         activityTitle.text = "曲线图"
         try {
             Thread {

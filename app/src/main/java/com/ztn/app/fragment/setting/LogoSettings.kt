@@ -1,8 +1,9 @@
 package com.ztn.app.fragment.setting
 
 import android.os.Bundle
-import android.support.v7.preference.PreferenceFragmentCompat
-import android.support.v7.preference.PreferenceManager
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import com.ztn.app.R
 import com.ztn.app.ui.SettingActivity
 
@@ -16,11 +17,8 @@ class LogoSettings : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
         addPreferencesFromResource(R.xml.seeting)
-
         val pm = preferenceManager
-        val sp = PreferenceManager.getDefaultSharedPreferences(activity)
-
-        pm.findPreference("boolean_value").summary = sp.getBoolean("boolean_value", false).toString()
-
+        val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        pm.findPreference<Preference>("boolean_value")?.summary = sp.getBoolean("boolean_value", false).toString()
     }
 }

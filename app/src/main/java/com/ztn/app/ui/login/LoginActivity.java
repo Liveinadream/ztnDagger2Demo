@@ -1,11 +1,9 @@
 package com.ztn.app.ui.login;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 import com.ztn.app.BR;
 import com.ztn.app.R;
@@ -21,7 +19,7 @@ import me.goldze.mvvmhabit.base.BaseActivity;
  */
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
 
-    public static void startWithNoThing(Context context) {
+    public static void startWithNothing(Context context) {
         context.startActivity(new Intent(context, LoginActivity.class));
     }
 

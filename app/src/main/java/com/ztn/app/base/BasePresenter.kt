@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Looper
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.View
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

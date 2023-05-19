@@ -1,10 +1,9 @@
 package com.ztn.app.ui.login;
 
 import android.app.Application;
-import android.databinding.ObservableField;
-import android.support.annotation.NonNull;
+import androidx.databinding.ObservableField;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import com.ztn.app.data.DemoRepository;
@@ -12,7 +11,6 @@ import com.ztn.common.ToastHelper;
 
 import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
-import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
@@ -43,7 +41,7 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
     }
 
     //登录按钮的点击事件
-    public BindingCommand loginOnClickCommand = new BindingCommand(this::login);
+    public BindingCommand<Void> loginOnClickCommand = new BindingCommand<>(this::login);
 
     /**
      * 网络模拟一个登陆操作

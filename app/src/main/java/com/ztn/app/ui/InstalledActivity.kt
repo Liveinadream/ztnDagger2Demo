@@ -6,13 +6,14 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.ztn.app.R
 import com.ztn.app.base.SimpleActivity
-import kotlinx.android.synthetic.main.activity_installed_apk.*
+//import kotlinx.android.synthetic.main.activity_installed_apk.*
 import com.ztn.common.ToastHelper
 import com.ztn.common.utils.show
 
@@ -32,9 +33,15 @@ class InstalledActivity : SimpleActivity() {
     private lateinit var myPackageInfo: MutableList<PackageInfo>
     private lateinit var adapter: BaseQuickAdapter<PackageInfo, BaseViewHolder>
     private lateinit var drawableList: ArrayList<Drawable>
+    private lateinit var installedApkList: RecyclerView
 
     override fun getLayout(): Int {
         return R.layout.activity_installed_apk
+    }
+
+    override fun onViewCreated() {
+        super.onViewCreated()
+        installedApkList = findViewById(R.id.installedApkList)
     }
 
     override fun initEventAndData() {
@@ -60,23 +67,28 @@ class InstalledActivity : SimpleActivity() {
                     R.layout.item_installed_apk,
                     myPackageInfo
                 ) {
-                    override fun convert(helper: BaseViewHolder?, item: PackageInfo) {
-                        helper?.apply {
-
+                    override fun convert(holder: BaseViewHolder, item: PackageInfo) {
+                        holder.apply {
                             setText(
                                 R.id.name,
-                                packageManager.getApplicationInfo(item.packageName, 0).loadLabel(packageManager)
+                                packageManager.getApplicationInfo(item.packageName, 0)
+                                    .loadLabel(packageManager)
                             )
                             setText(R.id.packageName, item.packageName)
                             getView<TextView>(R.id.packageName).isSelected = true
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                                setText(R.id.content, "版本名称：${item.versionName} 版本号：${item.longVersionCode}")
+                                setText(
+                                    R.id.content,
+                                    "版本名称：${item.versionName} 版本号：${item.longVersionCode}"
+                                )
                             } else {
-                                setText(R.id.content, "版本名称：${item.versionName} 版本号：${item.versionCode}")
+                                setText(
+                                    R.id.content,
+                                    "版本名称：${item.versionName} 版本号：${item.versionCode}"
+                                )
                             }
 
                             setImageDrawable(R.id.headImg, drawableList[this.adapterPosition])
-
                         }
                     }
                 }
@@ -94,7 +106,8 @@ class InstalledActivity : SimpleActivity() {
             adapter.setOnItemClickListener { adapter, view, position ->
 
                 val packageManager = packageManager
-                val intent = packageManager.getLaunchIntentForPackage(myPackageInfo[position].packageName)
+                val intent =
+                    packageManager.getLaunchIntentForPackage(myPackageInfo[position].packageName)
                 if (intent == null) {
                     ToastHelper.show("未安装")
                 } else {
@@ -103,7 +116,8 @@ class InstalledActivity : SimpleActivity() {
             }
 
             installedApkList.adapter = adapter
-            installedApkList.layoutManager = LinearLayoutManager(this)
+            installedApkList.layoutManager =
+                LinearLayoutManager(this)
             installedApkList.setHasFixedSize(true)
             installedApkList.setItemViewCacheSize(20)
         }

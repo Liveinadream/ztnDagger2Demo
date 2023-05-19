@@ -1,28 +1,28 @@
 package com.ztn.app.ui
 
 import android.Manifest
-import android.app.ApplicationErrorReport
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.opengl.GLSurfaceView
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.ImageView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.tbruyelle.rxpermissions2.RxPermissions
-import com.yhao.floatwindow.FloatWindow
 import com.yhao.floatwindow.PermissionListener
-import com.yhao.floatwindow.Screen
 import com.yhao.floatwindow.ViewStateListener
 import com.ztn.app.R
-import com.ztn.app.ui.chat.FriendActivity
 import com.ztn.app.ui.file.FileActivity
 import com.ztn.app.ui.login.LoginActivity
 import com.ztn.app.ui.user.UserInfoActivity
@@ -33,19 +33,30 @@ import com.ztn.common.ToastHelper
 import com.ztn.common.framework.AppManager
 import com.ztn.common.utils.animation.viewClick
 import com.ztn.common.utils.show
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.content_main.*
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var viewStateListener: ViewStateListener
     private lateinit var permissionListener: PermissionListener
+    private lateinit var toolbar: Toolbar
+    private lateinit var fab: FloatingActionButton
+    private lateinit var drawer_layout: DrawerLayout
+    private lateinit var nav_view: NavigationView
+    private lateinit var testImage: ImageView
+    private lateinit var writePermission: Button
+    private lateinit var createFile: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        toolbar = findViewById(R.id.toolbar)
+        drawer_layout = findViewById(R.id.drawer_layout)
+        nav_view = findViewById(R.id.nav_view)
+        fab = findViewById(R.id.fab)
+        testImage = findViewById(R.id.testImage)
+        writePermission = findViewById(R.id.writePermission)
+        createFile = findViewById(R.id.createFile)
         AppManager.get().addActivity(this)
         setSupportActionBar(toolbar)
 
@@ -182,7 +193,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.next -> {
-//                LoginActivity.startWithNothing(this)
+                LoginActivity.startWithNothing(this)
             }
             R.id.another -> {
 
@@ -212,7 +223,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.selfView -> {
 //                DoodlingActivity.startWithNothing(this)
                 DiagramActivity.startWithNothing(this)
-//                com.ztn.app.ui.login.LoginActivity.startWithNoThing(this)
+//                com.ztn.app.ui.login.LoginActivity.startWithNothing(this)
 
             }
             R.id.friend -> {

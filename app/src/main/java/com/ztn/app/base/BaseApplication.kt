@@ -1,5 +1,6 @@
 package com.ztn.app.base
 
+import com.gomap.sdk.Mapbox
 import com.j256.simplemagic.ContentInfoUtilSingle
 import com.ztn.app.di.component.AppComponent
 import com.ztn.app.di.component.DaggerAppComponent
@@ -28,7 +29,8 @@ class BaseApplication : me.goldze.mvvmhabit.base.BaseApplication() {
         AppManager.context = this
 
         //初始化奔溃日志,需要写入权限
-        CrashHandler.instance.init(this)
+
+//        CrashHandler.instance.init(this)
         appComponent = DaggerAppComponent.builder()
             .applicationModule(ApplicationModule(app))
 //            .httpModule(HttpModule())
@@ -39,6 +41,7 @@ class BaseApplication : me.goldze.mvvmhabit.base.BaseApplication() {
         Thread {
             ContentInfoUtilSingle.getInstance()
         }.start()
+        Mapbox.init(this);
     }
 
     companion object {

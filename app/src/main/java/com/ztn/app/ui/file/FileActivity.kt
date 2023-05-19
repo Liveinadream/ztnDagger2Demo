@@ -3,15 +3,16 @@ package com.ztn.app.ui.file
 import android.content.Context
 import android.content.Intent
 import android.os.Environment
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
 import android.view.View
+import android.widget.TextView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ztn.app.R
 import com.ztn.app.base.BaseActivity
 import com.ztn.app.fragment.file.FileFragment
 import com.ztn.common.ToastHelper
 import com.ztn.common.utils.gone
 import com.ztn.common.utils.visible
-import kotlinx.android.synthetic.main.activity_files.*
 
 
 /**
@@ -25,6 +26,9 @@ class FileActivity : BaseActivity<ActivityFilePresenter>(), ActivityFileContract
             context.startActivity(Intent(context, FileActivity::class.java))
         }
     }
+
+    private lateinit var path:TextView
+    private lateinit var seeTheSelected: FloatingActionButton
 
     //当前的路径
     private lateinit var usePath: String
@@ -63,6 +67,8 @@ class FileActivity : BaseActivity<ActivityFilePresenter>(), ActivityFileContract
 
     override fun onViewCreated() {
         super.onViewCreated()
+        path = findViewById(R.id.path)
+        seeTheSelected = findViewById(R.id.seeTheSelected)
         mPresenter.attachView(this)
         usePath = Environment.getExternalStorageDirectory().path
         path.text = usePath
