@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        package="com.ztn.app">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ztn.app">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,28 +13,31 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!--<uses-permission android:name="android.permission.INSTALL_PACKAGES"/>-->
     <application
-            android:name=".base.BaseApplication"
-            android:allowBackup="false"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/ztnTheme"
-            tools:ignore="GoogleAppIndexingWarning">
+        android:name=".base.BaseApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/ztnTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup">
         <activity
-                android:name=".ui.MainActivity"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar">
+            android:name=".ui.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity android:name=".ui.LoginActivity" />-->
+        <!--        <activity android:name=".ui.LoginActivity" />-->
 
         <activity android:name=".ui.InstalledActivity" />
 
@@ -46,20 +49,22 @@
 
         <activity android:name=".ui.view.DiagramActivity" />
 
+        <activity android:name=".ui.map.MapFeatureTestActivity" />
+
         <activity
-                android:name=".ui.view.DoodlingActivity"
-                android:windowSoftInputMode="adjustPan" />
+            android:name=".ui.view.DoodlingActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.user.UserInfoActivity" />
 
         <provider
-                android:name="androidx.core.content.FileProvider"
-                android:authorities="${applicationId}.FileProvider"
-                android:exported="false"
-                android:grantUriPermissions="true">
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/file_paths" />
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
 
 

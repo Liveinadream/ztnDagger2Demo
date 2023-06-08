@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.ztn.commom.R
+import com.ztn.common.R
 import com.ztn.common.utils.dip2px
 import com.ztn.common.utils.sp2px
 import kotlin.collections.ArrayList

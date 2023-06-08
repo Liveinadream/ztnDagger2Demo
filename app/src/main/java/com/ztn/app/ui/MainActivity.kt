@@ -20,25 +20,20 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.tbruyelle.rxpermissions2.RxPermissions
-import com.yhao.floatwindow.PermissionListener
-import com.yhao.floatwindow.ViewStateListener
 import com.ztn.app.R
 import com.ztn.app.ui.file.FileActivity
 import com.ztn.app.ui.login.LoginActivity
+import com.ztn.app.ui.map.MapFeatureTestActivity
 import com.ztn.app.ui.user.UserInfoActivity
 import com.ztn.app.ui.view.DiagramActivity
 import com.ztn.commom.utils.FaceUtils
-import com.ztn.commom.view.DiagramViewWithSurface
 import com.ztn.common.ToastHelper
 import com.ztn.common.framework.AppManager
 import com.ztn.common.utils.animation.viewClick
-import com.ztn.common.utils.show
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var viewStateListener: ViewStateListener
-    private lateinit var permissionListener: PermissionListener
     private lateinit var toolbar: Toolbar
     private lateinit var fab: FloatingActionButton
     private lateinit var drawer_layout: DrawerLayout
@@ -96,70 +91,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         createFile.setOnClickListener {
             openFileOutput("test" + System.currentTimeMillis(), Context.MODE_PRIVATE)
         }
-
-        val diagramView = DiagramViewWithSurface(this)
-        Thread {
-            diagramView.run()
-        }.start()
-        viewStateListener = object : ViewStateListener {
-            override fun onBackToDesktop() {
-
-            }
-
-            override fun onMoveAnimStart() {
-                diagramView.pause()
-
-            }
-
-            override fun onMoveAnimEnd() {
-                diagramView.resume()
-
-            }
-
-            override fun onPositionUpdate(p0: Int, p1: Int) {
-            }
-
-            override fun onDismiss() {
-                ToastHelper.show("关闭了")
-            }
-
-            override fun onShow() {
-                diagramView.resume()
-            }
-
-            override fun onHide() {
-                diagramView.pause()
-            }
-        }
-
-        permissionListener = object : PermissionListener {
-
-            override fun onSuccess() {
-            }
-
-            override fun onFail() {
-            }
-        }
-
-//        if (FloatWindow.get() == null) {
-//            FloatWindow
-//                .with(applicationContext)
-//                .setView((GLSurfaceView(this)))
-//                .setWidth(100)                               //设置控件宽高
-//                .setHeight(Screen.width, 0.2f)
-//                .setX(100)                                   //设置控件初始位置
-//                .setMoveStyle(1000, null)
-//                .setY(Screen.height, 0.3f)
-//                .setDesktopShow(true)                        //桌面显示
-//                .setViewStateListener(viewStateListener)    //监听悬浮控件状态改变
-//                .setPermissionListener(permissionListener)  //监听权限申请结果
-//                .build()
-//
-//            createFile.postDelayed({
-//                FloatWindow.destroy()
-//            }, 20000)
-//        }
-
     }
 
     override fun onBackPressed() {
@@ -196,7 +127,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 LoginActivity.startWithNothing(this)
             }
             R.id.another -> {
-
                 if (checkPackInfo("com.ztn.recyclerviewdemo")) {
                     val intent = Intent(Intent.ACTION_MAIN)
                     val componentName =
@@ -229,6 +159,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.friend -> {
 //                FriendActivity.startWithNothing(this)
                 UserInfoActivity.startWithNothing(this)
+            }
+
+            R.id.mapView -> {
+//                FriendActivity.startWithNothing(this)
+                MapFeatureTestActivity.startWithNothing(this)
             }
         }
 

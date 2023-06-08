@@ -52,5 +52,5 @@ dependencies {
     api rootProject.ext.dependencies["logger"]
 
     api rootProject.ext.dependencies["socket-io"]
-    api rootProject.ext.dependencies["FloatWindow"]
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
 }

@@ -11,7 +11,7 @@ import android.view.SurfaceView
 import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import com.orhanobut.logger.Logger
-import com.ztn.commom.R
+import com.ztn.common.R
 import com.ztn.common.utils.lock
 import com.ztn.common.utils.notifyAll
 import com.ztn.common.utils.wait

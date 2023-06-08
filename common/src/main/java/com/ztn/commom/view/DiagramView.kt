@@ -10,7 +10,7 @@ import android.view.View
 import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import com.orhanobut.logger.Logger
-import com.ztn.commom.R
+import com.ztn.common.R
 import com.ztn.library.rx.CommonOnSubscribe
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter

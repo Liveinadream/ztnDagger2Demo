@@ -1,7 +1,7 @@
 ext {
     versions = [
             compileSdkVersion  : 33,
-            buildToolsVersion  : "30.0.2",
+            buildToolsVersion  : "30.0.3",
             minSdkVersion      : 23,
             targetSdkVersion   : 30,
             versionCode              : 2,
@@ -20,13 +20,6 @@ ext {
             lifecycle          : "2.3.0",
     ]
 
-    android = [kotlin_version           : "1.3.20",
-               compileSdkVersion        : 28,
-               minSdkVersion            : 21,
-               targetSdkVersion         : 28,
-               buildToolsVersion        : "28.0.3",
-               supportLibraryVersion    : '28.0.0',
-    ]
     /**
      * 'android' is a special name in 'build.gradle', we should not use it as a variable name.
      * @deprecated

@@ -41,22 +41,10 @@ class BaseApplication : me.goldze.mvvmhabit.base.BaseApplication() {
         Thread {
             ContentInfoUtilSingle.getInstance()
         }.start()
-        Mapbox.init(this);
+        Mapbox.init(this)
     }
 
     companion object {
         lateinit var instance: BaseApplication
     }
-
-
-    /**
-     * 伴随应用启动仅仅运行一次并且在主进程上的程序
-     */
-    fun runOnlyOnce() {
-
-        if (true) {
-
-        }
-    }
-
 }

@@ -9,6 +9,7 @@ import com.ztn.app.rx.RxThread
 //import com.ztn.app.ui.LoginActivity
 import com.ztn.app.ui.chat.FriendActivity
 import com.ztn.app.ui.file.FileActivity
+import com.ztn.app.ui.map.MapFeatureTestActivity
 import dagger.Component
 
 /**
@@ -31,9 +32,11 @@ interface ActivityComponent {
     fun inject(fileActivity: FileActivity)
 
     fun inject(friendActivity: FriendActivity)
+    fun inject(mapActivity: MapFeatureTestActivity)
 
     fun inject(apis: ZhihuApis)
 
     fun inject(rxThread: RxThread)
+
 
 }

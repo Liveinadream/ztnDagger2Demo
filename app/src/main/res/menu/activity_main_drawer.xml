@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:showIn="navigation_view">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/next"
-                android:icon="@drawable/ic_menu_camera"
-                android:title="@string/jump_next"/>
+            android:id="@+id/next"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/jump_next" />
         <item
-                android:id="@+id/another"
-                android:icon="@drawable/ic_menu_gallery"
-                android:title="@string/another"/>
+            android:id="@+id/another"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/another" />
         <item
-                android:id="@+id/view_installed_apk"
-                android:icon="@drawable/ic_menu_slideshow"
-                android:title="@string/install_apk"/>
+            android:id="@+id/view_installed_apk"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/install_apk" />
         <item
-                android:id="@+id/show_file_in_phone"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="@string/ztn_file_manager"/>
+            android:id="@+id/show_file_in_phone"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/ztn_file_manager" />
     </group>
 
     <item android:title="@string/another_title">
         <menu>
             <item
-                    android:id="@+id/selfView"
-                    android:icon="@drawable/ic_menu_share"
-                    android:title="@string/self_view"/>
+                android:id="@+id/selfView"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/self_view" />
             <item
-                    android:id="@+id/friend"
-                    android:icon="@drawable/ic_menu_send"
-                    android:title="@string/chat"/>
+                android:id="@+id/friend"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/chat" />
+            <item
+                android:id="@+id/mapView"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/demo_map" />
+
+
         </menu>
     </item>
 
